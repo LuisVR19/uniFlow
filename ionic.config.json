@@ -1,0 +1,7 @@
+{
+  "name": "weekflow",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
