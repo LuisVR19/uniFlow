@@ -15,7 +15,11 @@
       "Bash(npx tsc *)",
       "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('src/assets/i18n/en.json','utf8'\\)\\); console.log\\('en.json OK'\\)\")",
       "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('src/assets/i18n/es.json','utf8'\\)\\); console.log\\('es.json OK'\\)\")",
-      "mcp__supabase__apply_migration"
+      "mcp__supabase__apply_migration",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(list\\(d['projects'].keys\\(\\)\\)\\)\")",
+      "Bash(node -e \"const d=require\\('./angular.json'\\); console.log\\(Object.keys\\(d.projects\\)\\)\")",
+      "Bash(node -e \"const d=require\\('./angular.json'\\); console.log\\(JSON.stringify\\(d.projects.app.architect.build.configurations.production.budgets, null, 2\\)\\)\")",
+      "Bash(npx angular-cli-ghpages *)"
     ]
   },
   "enableAllProjectMcpServers": true,
