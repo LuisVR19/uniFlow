@@ -10,7 +10,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "deploy": "ng build --configuration production --base-href /uniFlow/ && npx angular-cli-ghpages --dir=www"
+    "deploy": "ng build --configuration production"
   },
   "private": true,
   "dependencies": {

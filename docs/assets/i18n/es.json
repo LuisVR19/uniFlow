@@ -1,0 +1,317 @@
+{
+  "common": {
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "create": "Crear",
+    "delete": "Eliminar",
+    "none": "Ninguno",
+    "optional": "opcional",
+    "loading": {
+      "creating": "Creando...",
+      "saving": "Guardando...",
+      "deleting": "Eliminando...",
+      "clearing": "Borrando..."
+    },
+    "dates": {
+      "today": "Hoy",
+      "tomorrow": "Mañana",
+      "yesterday": "Ayer"
+    },
+    "status": {
+      "active": "Activo",
+      "inactive": "Inactivo"
+    }
+  },
+  "home": {
+    "eyebrow": "Organizador académico estudiantil",
+    "title": "Tu universidad, organizada.",
+    "copy": "Gestiona semestres, lleva el seguimiento de tus notas, planifica tu horario y nunca pierdas una fecha — todo en un solo lugar.",
+    "viewSchedule": "Ver Horario",
+    "addEvent": "Agregar Evento",
+    "today": {
+      "label": "Hoy",
+      "seeAll": "Ver todo"
+    },
+    "empty": {
+      "title": "Nada planeado para hoy",
+      "sub": "Agrega un bloque de estudio o clase para comenzar."
+    },
+    "upcoming": {
+      "eyebrow": "Próximamente",
+      "title": "Vence Esta Semana",
+      "seeAll": "Ver todo",
+      "empty": {
+        "title": "¡Todo al día!",
+        "sub": "Sin evaluaciones pendientes en los próximos 7 días."
+      },
+      "dueToday": "Hoy",
+      "dueTomorrow": "Mañana",
+      "dueInDays": "En {{days}} días"
+    },
+    "university": {
+      "eyebrow": "Académico",
+      "title": "Mi Universidad",
+      "semesters": "Semestres",
+      "semestersSub": "Gestiona tus semestres y cursos",
+      "tasks": "Tareas Pendientes",
+      "tasksSub": "Exámenes y entregas por fecha",
+      "schedule": "Horario Semanal",
+      "scheduleSub": "Ver y editar tu horario de clases",
+      "addEvent": "Agregar Evento",
+      "addEventSub": "Crear un nuevo evento en el horario"
+    }
+  },
+  "schedule": {
+    "title": "Horario Semanal",
+    "hint": "Arrastra eventos para reprogramarlos. Los conflictos se bloquean automáticamente.",
+    "rotateHint": "Gira el dispositivo a horizontal para ver el horario completo.",
+    "clear": {
+      "button": "Borrar horario",
+      "header": "¿Borrar el horario completo?",
+      "message": "Esto eliminará permanentemente todos los eventos de tu plan semanal.",
+      "cancel": "Cancelar",
+      "confirm": "Eliminar todo",
+      "toast": "Horario borrado."
+    },
+    "add": "Agregar",
+    "export": {
+      "button": "Exportar",
+      "sheetTitle": "Exportar Horario",
+      "png": "Guardar como imagen (PNG)",
+      "pdf": "Guardar como documento (PDF)",
+      "cancel": "Cancelar",
+      "loading": "Generando exportación…",
+      "error": "Error al exportar. Inténtalo de nuevo.",
+      "filenamePng": "uniflow-horario.png",
+      "filenamePdf": "uniflow-horario.pdf"
+    }
+  },
+  "addEvent": {
+    "pageTitle": "Agregar Evento",
+    "sections": {
+      "details": "Detalles del evento",
+      "time": "Hora",
+      "extra": "Detalles"
+    },
+    "fields": {
+      "titleLabel": "Título",
+      "titlePlaceholder": "Grupo de estudio, clase, práctica...",
+      "daysLabel": "Días de la semana",
+      "startLabel": "Inicio",
+      "endLabel": "Fin",
+      "descriptionLabel": "Descripción",
+      "descriptionPlaceholder": "Opcional — notas, lugar, materiales...",
+      "colorLabel": "Color del evento",
+      "courseLabel": "Curso"
+    },
+    "timeModal": {
+      "startTitle": "Hora de inicio",
+      "endTitle": "Hora de fin",
+      "done": "Listo"
+    },
+    "save": "Guardar Evento",
+    "alerts": {
+      "invalidTimeHeader": "Rango de hora inválido",
+      "invalidTimeMessage": "La hora de fin debe ser posterior a la de inicio.",
+      "outsideHoursHeader": "Fuera del horario",
+      "outsideHoursMessage": "Elige una hora entre {{start}}:00 y {{end}}:00.",
+      "conflictHeader": "Conflicto de horario",
+      "conflictMessage": "Se superpone con \"{{title}}\". Elige un día u hora diferente.",
+      "ok": "Aceptar"
+    },
+    "savedToast": "Evento agregado a tu horario.",
+    "savedToastMultiple": "{{count}} eventos agregados a tu horario.",
+    "savedToastPartial": "{{count}} eventos agregados. {{skipped}} omitido(s) por conflictos."
+  },
+  "eventCard": {
+    "alert": {
+      "header": "¿Eliminar evento?",
+      "message": "¿Quitar \"{{title}}\" de tu plan semanal?",
+      "keep": "Conservar",
+      "delete": "Eliminar"
+    },
+    "deletedToast": "Evento eliminado."
+  },
+  "grid": {
+    "alert": {
+      "header": "Horario no disponible",
+      "conflictMessage": "\"{{title}}\" ya usa ese horario. Elige otro.",
+      "outOfRangeMessage": "Ese movimiento colocaría el evento fuera del rango del horario.",
+      "ok": "Aceptar"
+    },
+    "movedToast": "Movido a {{day}} a las {{time}}."
+  },
+  "auth": {
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "loading": "Por favor espera...",
+    "logout": "Cerrar sesión",
+    "login": {
+      "subtitle": "Inicia sesión en tu cuenta",
+      "submit": "Iniciar sesión",
+      "noAccount": "¿No tienes cuenta?",
+      "register": "Crear una"
+    },
+    "register": {
+      "subtitle": "Crea tu cuenta",
+      "submit": "Crear cuenta",
+      "hasAccount": "¿Ya tienes cuenta?",
+      "login": "Iniciar sesión",
+      "confirmEmail": "Revisa tu correo para confirmar tu cuenta."
+    },
+    "errors": {
+      "emailRequired": "Ingresa un correo válido.",
+      "passwordRequired": "La contraseña debe tener al menos 6 caracteres.",
+      "passwordsMismatch": "Las contraseñas no coinciden.",
+      "invalidCredentials": "Correo o contraseña incorrectos.",
+      "emailNotConfirmed": "Confirma tu correo antes de iniciar sesión.",
+      "emailInUse": "Ya existe una cuenta con ese correo.",
+      "passwordWeak": "La contraseña debe tener al menos 6 caracteres.",
+      "generic": "Algo salió mal. Intenta de nuevo."
+    }
+  },
+  "days": {
+    "monday": "Lunes",
+    "tuesday": "Martes",
+    "wednesday": "Miércoles",
+    "thursday": "Jueves",
+    "friday": "Viernes",
+    "saturday": "Sábado",
+    "sunday": "Domingo",
+    "monday_short": "Lun",
+    "tuesday_short": "Mar",
+    "wednesday_short": "Mié",
+    "thursday_short": "Jue",
+    "friday_short": "Vie",
+    "saturday_short": "Sáb",
+    "sunday_short": "Dom"
+  },
+  "semesters": {
+    "title": "Mis Semestres",
+    "empty": {
+      "title": "Sin semestres aún",
+      "sub": "Toca + para crear tu primer semestre"
+    },
+    "dialog": {
+      "createHeader": "Nuevo Semestre",
+      "editHeader": "Editar Semestre",
+      "deleteHeader": "Eliminar Semestre",
+      "deleteMessage": "¿Eliminar \"{{name}}\"? También se eliminarán todos los cursos.",
+      "namePlaceholder": "Nombre (ej. Primer Semestre 2025)",
+      "yearPlaceholder": "Año"
+    },
+    "toast": {
+      "loadError": "Error al cargar semestres",
+      "created": "Semestre creado",
+      "createError": "Error al crear el semestre",
+      "updated": "Semestre actualizado",
+      "updateError": "Error al actualizar el semestre",
+      "deleted": "Semestre eliminado",
+      "deleteError": "Error al eliminar el semestre"
+    }
+  },
+  "courses": {
+    "empty": {
+      "title": "Sin cursos aún",
+      "sub": "Toca + para agregar tu primer curso"
+    },
+    "dialog": {
+      "createHeader": "Nuevo Curso",
+      "editHeader": "Editar Curso",
+      "deleteHeader": "Eliminar Curso",
+      "deleteMessage": "¿Eliminar \"{{name}}\"?",
+      "namePlaceholder": "Nombre del curso",
+      "codePlaceholder": "Código (ej. CS101)",
+      "creditsPlaceholder": "Créditos"
+    },
+    "toast": {
+      "loadError": "Error al cargar cursos",
+      "colorError": "Error al actualizar el color",
+      "created": "Curso creado",
+      "createError": "Error al crear el curso",
+      "updated": "Curso actualizado",
+      "updateError": "Error al actualizar el curso",
+      "deleted": "Curso eliminado",
+      "deleteError": "Error al eliminar el curso"
+    }
+  },
+  "courseDetail": {
+    "gradeCard": {
+      "label": "Nota del Curso",
+      "maxAchievable": "Máx. alcanzable: {{value}} pts",
+      "totalPct": "Total evaluaciones: {{pct}}% (no es 100%)",
+      "passing": "Aprobando — ¡sigue así!",
+      "failed": "Ya no es posible alcanzar la nota mínima",
+      "needAvg": "Necesitas {{pct}}% promedio en las pendientes para aprobar",
+      "empty": "Agrega evaluaciones para comenzar a seguir tu nota"
+    },
+    "empty": {
+      "title": "Sin evaluaciones aún",
+      "sub": "Toca + para agregar tu primera evaluación"
+    },
+    "sectionLabel": "Evaluaciones",
+    "eval": {
+      "pending": "Sin calificación aún",
+      "minRequired": "Mín. para aprobar:"
+    },
+    "dialog": {
+      "createHeader": "Nueva Evaluación",
+      "editHeader": "Editar Evaluación",
+      "deleteHeader": "Eliminar Evaluación",
+      "deleteMessage": "¿Eliminar \"{{name}}\"? También se eliminará su nota.",
+      "namePlaceholder": "Nombre (ej. Examen 1)",
+      "weightPlaceholder": "Peso % (ej. 25)",
+      "datePlaceholder": "Fecha de entrega / examen (opcional)"
+    },
+    "toast": {
+      "loadError": "Error al cargar evaluaciones",
+      "scoreRange": "La nota debe estar entre 0 y {{max}}",
+      "gradeSaved": "Nota guardada",
+      "gradeSaveError": "Error al guardar la nota",
+      "gradeClearError": "Error al borrar la nota",
+      "createError": "Error al crear la evaluación",
+      "updateError": "Error al actualizar la evaluación",
+      "deleteError": "Error al eliminar la evaluación"
+    }
+  },
+  "profile": {
+    "title": "Mi Perfil",
+    "setup": {
+      "title": "Bienvenido a UniFlow",
+      "sub": "Cuéntanos un poco sobre ti para comenzar"
+    },
+    "fields": {
+      "fullName": "Nombre completo",
+      "university": "Universidad",
+      "career": "Carrera",
+      "fullNamePlaceholder": "ej. María García",
+      "universityPlaceholder": "ej. Universidad Nacional",
+      "careerPlaceholder": "ej. Ingeniería Informática"
+    },
+    "btn": {
+      "getStarted": "Comenzar",
+      "saveChanges": "Guardar Cambios"
+    },
+    "toast": {
+      "nameRequired": "El nombre es obligatorio",
+      "saved": "Perfil guardado",
+      "saveError": "Error al guardar el perfil"
+    }
+  },
+  "tasks": {
+    "title": "Tareas Pendientes",
+    "empty": {
+      "title": "Sin evaluaciones aún",
+      "sub": "Agrega evaluaciones en tus cursos para seguir las fechas aquí"
+    },
+    "groups": {
+      "overdue": "Vencidas",
+      "today": "Hoy",
+      "thisWeek": "Esta Semana",
+      "upcoming": "Próximas",
+      "noDate": "Sin Fecha",
+      "completed": "Completadas"
+    }
+  }
+}

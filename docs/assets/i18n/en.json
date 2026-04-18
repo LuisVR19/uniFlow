@@ -1,0 +1,317 @@
+{
+  "common": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "create": "Create",
+    "delete": "Delete",
+    "none": "None",
+    "optional": "optional",
+    "loading": {
+      "creating": "Creating...",
+      "saving": "Saving...",
+      "deleting": "Deleting...",
+      "clearing": "Clearing..."
+    },
+    "dates": {
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "yesterday": "Yesterday"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    }
+  },
+  "home": {
+    "eyebrow": "Student academic organizer",
+    "title": "Your university, organized.",
+    "copy": "Manage semesters, track grades, plan your schedule, and never miss a deadline — all in one place.",
+    "viewSchedule": "View Schedule",
+    "addEvent": "Add Event",
+    "today": {
+      "label": "Today",
+      "seeAll": "See all"
+    },
+    "empty": {
+      "title": "Nothing planned today",
+      "sub": "Add a study block or class to get started."
+    },
+    "upcoming": {
+      "eyebrow": "Coming up",
+      "title": "Due This Week",
+      "seeAll": "See all",
+      "empty": {
+        "title": "All caught up!",
+        "sub": "No pending evaluations in the next 7 days."
+      },
+      "dueToday": "Today",
+      "dueTomorrow": "Tomorrow",
+      "dueInDays": "In {{days}} days"
+    },
+    "university": {
+      "eyebrow": "Academic",
+      "title": "My University",
+      "semesters": "Semesters",
+      "semestersSub": "Manage your semesters and courses",
+      "tasks": "Pending Tasks",
+      "tasksSub": "Exams and assignments by deadline",
+      "schedule": "Weekly Schedule",
+      "scheduleSub": "View and edit your class schedule",
+      "addEvent": "Add Event",
+      "addEventSub": "Create a new schedule event"
+    }
+  },
+  "schedule": {
+    "title": "Weekly Schedule",
+    "hint": "Drag events to reschedule. Conflicts are blocked automatically.",
+    "rotateHint": "Rotate your device to landscape for a better view of the full schedule.",
+    "clear": {
+      "button": "Clear schedule",
+      "header": "Clear entire schedule?",
+      "message": "This will permanently delete all events from your weekly plan.",
+      "cancel": "Cancel",
+      "confirm": "Delete all",
+      "toast": "Schedule cleared."
+    },
+    "add": "Add",
+    "export": {
+      "button": "Export",
+      "sheetTitle": "Export Schedule",
+      "png": "Save as Image (PNG)",
+      "pdf": "Save as Document (PDF)",
+      "cancel": "Cancel",
+      "loading": "Generating export…",
+      "error": "Export failed. Please try again.",
+      "filenamePng": "uniflow-schedule.png",
+      "filenamePdf": "uniflow-schedule.pdf"
+    }
+  },
+  "addEvent": {
+    "pageTitle": "Add Event",
+    "sections": {
+      "details": "Event details",
+      "time": "Time",
+      "extra": "Details"
+    },
+    "fields": {
+      "titleLabel": "Title",
+      "titlePlaceholder": "Study group, class, practice...",
+      "daysLabel": "Days of the week",
+      "startLabel": "Start",
+      "endLabel": "End",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "Optional — notes, location, materials...",
+      "colorLabel": "Event color",
+      "courseLabel": "Course"
+    },
+    "timeModal": {
+      "startTitle": "Start time",
+      "endTitle": "End time",
+      "done": "Done"
+    },
+    "save": "Save Event",
+    "alerts": {
+      "invalidTimeHeader": "Invalid time range",
+      "invalidTimeMessage": "End time must be later than the start time.",
+      "outsideHoursHeader": "Outside schedule hours",
+      "outsideHoursMessage": "Pick a time between {{start}}:00 and {{end}}:00.",
+      "conflictHeader": "Schedule conflict",
+      "conflictMessage": "This overlaps with \"{{title}}\". Choose a different day or time.",
+      "ok": "OK"
+    },
+    "savedToast": "Event added to your schedule.",
+    "savedToastMultiple": "{{count}} events added to your schedule.",
+    "savedToastPartial": "{{count}} events added. {{skipped}} skipped due to conflicts."
+  },
+  "eventCard": {
+    "alert": {
+      "header": "Delete event?",
+      "message": "Remove \"{{title}}\" from your weekly plan?",
+      "keep": "Keep",
+      "delete": "Delete"
+    },
+    "deletedToast": "Event deleted."
+  },
+  "grid": {
+    "alert": {
+      "header": "Time slot unavailable",
+      "conflictMessage": "\"{{title}}\" already uses that time. Pick another slot.",
+      "outOfRangeMessage": "That drop would place the event outside the schedule range.",
+      "ok": "OK"
+    },
+    "movedToast": "Moved to {{day}} at {{time}}."
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "loading": "Please wait...",
+    "logout": "Log out",
+    "login": {
+      "subtitle": "Sign in to your account",
+      "submit": "Sign in",
+      "noAccount": "Don't have an account?",
+      "register": "Create one"
+    },
+    "register": {
+      "subtitle": "Create your account",
+      "submit": "Create account",
+      "hasAccount": "Already have an account?",
+      "login": "Sign in",
+      "confirmEmail": "Check your email to confirm your account."
+    },
+    "errors": {
+      "emailRequired": "Enter a valid email.",
+      "passwordRequired": "Password must be at least 6 characters.",
+      "passwordsMismatch": "Passwords do not match.",
+      "invalidCredentials": "Incorrect email or password.",
+      "emailNotConfirmed": "Please confirm your email before signing in.",
+      "emailInUse": "An account with this email already exists.",
+      "passwordWeak": "Password must be at least 6 characters.",
+      "generic": "Something went wrong. Please try again."
+    }
+  },
+  "days": {
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday",
+    "monday_short": "Mon",
+    "tuesday_short": "Tue",
+    "wednesday_short": "Wed",
+    "thursday_short": "Thu",
+    "friday_short": "Fri",
+    "saturday_short": "Sat",
+    "sunday_short": "Sun"
+  },
+  "semesters": {
+    "title": "My Semesters",
+    "empty": {
+      "title": "No semesters yet",
+      "sub": "Tap + to create your first semester"
+    },
+    "dialog": {
+      "createHeader": "New Semester",
+      "editHeader": "Edit Semester",
+      "deleteHeader": "Delete Semester",
+      "deleteMessage": "Delete \"{{name}}\"? All courses inside will be deleted too.",
+      "namePlaceholder": "Name (e.g. Spring 2025)",
+      "yearPlaceholder": "Year"
+    },
+    "toast": {
+      "loadError": "Error loading semesters",
+      "created": "Semester created",
+      "createError": "Failed to create semester",
+      "updated": "Semester updated",
+      "updateError": "Failed to update semester",
+      "deleted": "Semester deleted",
+      "deleteError": "Failed to delete semester"
+    }
+  },
+  "courses": {
+    "empty": {
+      "title": "No courses yet",
+      "sub": "Tap + to add your first course"
+    },
+    "dialog": {
+      "createHeader": "New Course",
+      "editHeader": "Edit Course",
+      "deleteHeader": "Delete Course",
+      "deleteMessage": "Delete \"{{name}}\"?",
+      "namePlaceholder": "Course name",
+      "codePlaceholder": "Code (e.g. CS101)",
+      "creditsPlaceholder": "Credits"
+    },
+    "toast": {
+      "loadError": "Error loading courses",
+      "colorError": "Failed to update color",
+      "created": "Course created",
+      "createError": "Failed to create course",
+      "updated": "Course updated",
+      "updateError": "Failed to update course",
+      "deleted": "Course deleted",
+      "deleteError": "Failed to delete course"
+    }
+  },
+  "courseDetail": {
+    "gradeCard": {
+      "label": "Course Grade",
+      "maxAchievable": "Max achievable: {{value}} pts",
+      "totalPct": "Evaluations total: {{pct}}% (not 100%)",
+      "passing": "Passing — keep it up!",
+      "failed": "No longer possible to reach the passing grade",
+      "needAvg": "Need {{pct}}% avg on pending evaluations to pass",
+      "empty": "Add evaluations below to start tracking your grade"
+    },
+    "empty": {
+      "title": "No evaluations yet",
+      "sub": "Tap + to add your first evaluation"
+    },
+    "sectionLabel": "Evaluations",
+    "eval": {
+      "pending": "Not graded yet",
+      "minRequired": "Min. to pass:"
+    },
+    "dialog": {
+      "createHeader": "New Evaluation",
+      "editHeader": "Edit Evaluation",
+      "deleteHeader": "Delete Evaluation",
+      "deleteMessage": "Delete \"{{name}}\"? Its grade will be removed too.",
+      "namePlaceholder": "Name (e.g. Exam 1)",
+      "weightPlaceholder": "Weight % (e.g. 25)",
+      "datePlaceholder": "Due / Exam date (optional)"
+    },
+    "toast": {
+      "loadError": "Error loading evaluations",
+      "scoreRange": "Score must be between 0 and {{max}}",
+      "gradeSaved": "Grade saved",
+      "gradeSaveError": "Failed to save grade",
+      "gradeClearError": "Failed to clear grade",
+      "createError": "Failed to create evaluation",
+      "updateError": "Failed to update evaluation",
+      "deleteError": "Failed to delete evaluation"
+    }
+  },
+  "profile": {
+    "title": "My Profile",
+    "setup": {
+      "title": "Welcome to UniFlow",
+      "sub": "Tell us a bit about yourself to get started"
+    },
+    "fields": {
+      "fullName": "Full Name",
+      "university": "University",
+      "career": "Career / Major",
+      "fullNamePlaceholder": "e.g. María García",
+      "universityPlaceholder": "e.g. Universidad Nacional",
+      "careerPlaceholder": "e.g. Computer Science"
+    },
+    "btn": {
+      "getStarted": "Get Started",
+      "saveChanges": "Save Changes"
+    },
+    "toast": {
+      "nameRequired": "Name is required",
+      "saved": "Profile saved",
+      "saveError": "Failed to save profile"
+    }
+  },
+  "tasks": {
+    "title": "Pending Tasks",
+    "empty": {
+      "title": "No evaluations yet",
+      "sub": "Add evaluations from your courses to track deadlines here"
+    },
+    "groups": {
+      "overdue": "Overdue",
+      "today": "Today",
+      "thisWeek": "This Week",
+      "upcoming": "Upcoming",
+      "noDate": "No Date",
+      "completed": "Completed"
+    }
+  }
+}
