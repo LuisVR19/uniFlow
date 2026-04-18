@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
 
 import { EvaluationWithCourse } from '../../models/evaluation.model';
 import { ScheduleEvent, WEEK_DAYS } from '../../models/event.model';
@@ -13,7 +12,6 @@ import { LanguageService } from '../../services/language.service';
 import { ProfileService } from '../../services/profile.service';
 import { ScheduleService } from '../../services/schedule.service';
 import { SemesterService } from '../../services/semester.service';
-import { SupabaseService } from '../../services/supabase.service';
 import { ThemeService } from '../../services/theme.service';
 
 export interface UpcomingTask {
@@ -32,40 +30,32 @@ export class HomePage implements OnInit, OnDestroy {
   todayEvents: ScheduleEvent[] = [];
   upcomingTasks: UpcomingTask[] = [];
   profile: Profile | null = null;
+  loadingTasks = true;
   private eventsSubscription?: Subscription;
 
   constructor(
     private readonly scheduleService: ScheduleService,
-    private readonly supabase: SupabaseService,
     private readonly profileService: ProfileService,
     private readonly semesterService: SemesterService,
     private readonly courseService: CourseService,
     private readonly evalService: EvaluationService,
     private readonly gradeService: GradeService,
     readonly router: Router,
-    private readonly translate: TranslateService,
     readonly themeService: ThemeService,
     readonly languageService: LanguageService,
   ) {}
 
-  get universityTitle(): string {
-    return this.profile?.university || this.translate.instant('home.university.title');
+  get greetingKey(): string {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'home.greeting.morning';
+    if (hour < 18) return 'home.greeting.afternoon';
+    return 'home.greeting.evening';
   }
 
-  get initials(): string {
+  get firstName(): string {
     const name = this.profile?.full_name;
-    if (!name) return '?';
-    return name
-      .trim()
-      .split(/\s+/)
-      .slice(0, 2)
-      .map((p) => p[0])
-      .join('')
-      .toUpperCase();
-  }
-
-  goToProfile(): void {
-    this.router.navigate(['/profile']);
+    if (!name) return '';
+    return name.trim().split(/\s+/)[0] ?? '';
   }
 
   async ngOnInit(): Promise<void> {
@@ -73,22 +63,15 @@ export class HomePage implements OnInit, OnDestroy {
     this.eventsSubscription = this.scheduleService.getEvents().subscribe(() => {
       this.todayEvents = this.scheduleService.getTodayEvents();
     });
-    await Promise.all([this.checkProfile(), this.loadUpcomingTasks()]);
+    await this.checkProfile();
+  }
+
+  async ionViewWillEnter(): Promise<void> {
+    await this.loadUpcomingTasks();
   }
 
   ngOnDestroy(): void {
     this.eventsSubscription?.unsubscribe();
-  }
-
-  async logout(): Promise<void> {
-    await this.supabase.signOut();
-    this.router.navigateByUrl('/auth/login', { replaceUrl: true });
-  }
-
-  dueDateLabel(task: UpcomingTask): string {
-    if (task.daysLeft === 0) return this.translate.instant('home.upcoming.dueToday');
-    if (task.daysLeft === 1) return this.translate.instant('home.upcoming.dueTomorrow');
-    return this.translate.instant('home.upcoming.dueInDays', { days: task.daysLeft });
   }
 
   dueDateClass(daysLeft: number): string {
@@ -98,6 +81,7 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   private async loadUpcomingTasks(): Promise<void> {
+    this.loadingTasks = true;
     try {
       const activeSemester = await this.semesterService.getActive();
       if (!activeSemester) return;
@@ -136,6 +120,8 @@ export class HomePage implements OnInit, OnDestroy {
         .sort((a, b) => a.daysLeft - b.daysLeft);
     } catch {
       // non-critical — section just won't show
+    } finally {
+      this.loadingTasks = false;
     }
   }
 
@@ -146,7 +132,7 @@ export class HomePage implements OnInit, OnDestroy {
       // ignore — network error, don't block the user
     }
     if (!this.profile?.full_name) {
-      this.router.navigateByUrl('/profile?setup=true');
+      this.router.navigateByUrl('/tabs/profile?setup=true');
     }
   }
 

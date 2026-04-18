@@ -10,7 +10,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "deploy": "ng build --configuration production"
+    "deploy": "ng build --configuration production",
+    "build:mobile": "ng build --configuration mobile && npx cap sync android"
   },
   "private": true,
   "dependencies": {
@@ -29,6 +30,7 @@
     "@capacitor/filesystem": "^8.1.2",
     "@capacitor/haptics": "8.0.2",
     "@capacitor/keyboard": "8.0.3",
+    "@capacitor/local-notifications": "^8.0.2",
     "@capacitor/share": "^8.0.1",
     "@capacitor/status-bar": "8.0.2",
     "@ionic/angular": "^8.0.0",
@@ -52,6 +54,7 @@
     "@angular/cli": "^20.0.0",
     "@angular/compiler-cli": "^20.0.0",
     "@angular/language-service": "^20.0.0",
+    "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^8.3.0",
     "@ionic/angular-toolkit": "^12.0.0",
     "@types/jasmine": "~5.1.0",

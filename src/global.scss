@@ -251,8 +251,8 @@ ion-label {
 .styled-datetime {
   // Backgrounds — must match the card surface so the fade gradient blends
   --background: var(--ion-card-background);
-  --background-rgb: 255, 255, 255;
-  --wheel-fade-background-rgb: 255, 255, 255;
+  --background-rgb: 253, 252, 250;
+  --wheel-fade-background-rgb: 253, 252, 250;
 
   // Wheel items
   --wheel-item-color: var(--app-text-tertiary);
@@ -370,15 +370,12 @@ ion-label {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 64px;
-    height: 64px;
-    border-radius: var(--app-radius-xl);
-    background: var(--ion-color-primary);
     margin-bottom: 1rem;
 
-    ion-icon {
-      font-size: 2rem;
-      color: #fff;
+    .auth-logo-img {
+      height: 128px;
+      width: auto;
+      filter: brightness(0);
     }
   }
 
@@ -412,6 +409,28 @@ ion-label {
     flex-direction: column;
     gap: 1rem;
   }
+
+  ion-input {
+    --background: var(--app-surface-2);
+    --border-color: var(--app-border-strong);
+    --border-radius: var(--app-radius-md);
+    --color: var(--ion-text-color);
+    --placeholder-color: var(--app-text-tertiary);
+    --placeholder-opacity: 1;
+    --highlight-color-focused: transparent;
+    --highlight-color-valid: transparent;
+    --highlight-height: 0px;
+    --label-color: var(--app-text-secondary);
+    --padding-start: 0.875rem;
+    --padding-end: 0.875rem;
+    font-size: 0.875rem;
+    min-height: 52px;
+  }
+}
+
+:root.ion-palette-dark .auth-card ion-input {
+  --background: rgba(241, 245, 249, 0.06);
+  --border-color: var(--app-border-strong);
 }
 
 .field-wrap {
@@ -457,6 +476,10 @@ ion-label {
 .submit-btn {
   margin-bottom: 1.25rem;
   --border-radius: var(--app-radius-lg);
+  --min-height: 52px;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
 }
 
 .auth-link {
@@ -473,5 +496,34 @@ ion-label {
     &:hover {
       text-decoration: underline;
     }
+  }
+}
+
+// ─── UniFlow logo — theme adaptation ─────────────────────────────────────────
+// Light mode: logo is black (brightness(0) forces pure black regardless of SVG fill)
+// Dark mode:  invert to white
+.auth-logo-img,
+.nav-logo {
+  filter: brightness(0);
+  transition: filter 0.2s ease;
+}
+
+:root.ion-palette-dark {
+  .auth-logo-img,
+  .nav-logo {
+    filter: brightness(0) invert(1);
+  }
+}
+
+// ─── Nav title with logo ──────────────────────────────────────────────────────
+.nav-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .nav-logo {
+    height: 40px;
+    width: auto;
+    display: block;
   }
 }

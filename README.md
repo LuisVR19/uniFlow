@@ -106,14 +106,22 @@ npm install
 ionic serve
 ```
 
-### Build for production
+### Build para web (GitHub Pages)
 
 ```bash
-ionic build --prod
+npm run deploy
 ```
 
-### Run on Android (requires Android Studio)
+Genera el build en `docs/` con `base href="/uniFlow/"`.
+
+### Build para Android (móvil)
 
 ```bash
-ionic capacitor run android
+npm run build:mobile
+npx cap open android
 ```
+
+`build:mobile` compila con `base href="/"` y sincroniza los assets en el proyecto Android.  
+Desde Android Studio: selecciona el dispositivo y presiona **Run**.
+
+> Cada vez que cambies código, repite `npm run build:mobile` antes de correr desde Android Studio.

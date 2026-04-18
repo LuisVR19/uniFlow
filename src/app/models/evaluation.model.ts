@@ -5,6 +5,7 @@ export interface CourseEvaluation {
   percentage: number;
   max_score: number;
   due_date: string | null;
+  notify_days_before: number | null;
   created_at: string;
 }
 
@@ -22,4 +23,5 @@ export interface EvaluationDraft {
   percentage: number;
   max_score?: number;
   due_date?: string | null;
+  notify_days_before?: number | null;
 }

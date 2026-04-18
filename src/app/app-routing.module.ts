@@ -17,13 +17,8 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then((m) => m.HomePageModule),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'schedule',
-    loadChildren: () => import('./pages/schedule/schedule.module').then((m) => m.SchedulePageModule),
+    path: 'tabs',
+    loadChildren: () => import('./pages/tabs/tabs.module').then((m) => m.TabsPageModule),
     canActivate: [authGuard],
   },
   {
@@ -42,16 +37,6 @@ const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path: 'profile',
-    loadChildren: () => import('./pages/profile/profile.module').then((m) => m.ProfilePageModule),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'tasks',
-    loadChildren: () => import('./pages/tasks/tasks.module').then((m) => m.TasksPageModule),
-    canActivate: [authGuard],
-  },
-  {
     path: 'course-detail/:courseId',
     loadChildren: () =>
       import('./pages/course-detail/course-detail.module').then((m) => m.CourseDetailPageModule),
@@ -59,7 +44,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: '/tabs/home',
     pathMatch: 'full',
   },
 ];

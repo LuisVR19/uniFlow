@@ -22,7 +22,18 @@
       "inactive": "Inactive"
     }
   },
+  "tabs": {
+    "home": "Home",
+    "schedule": "Schedule",
+    "tasks": "Tasks",
+    "profile": "Profile"
+  },
   "home": {
+    "greeting": {
+      "morning": "Good morning",
+      "afternoon": "Good afternoon",
+      "evening": "Good evening"
+    },
     "eyebrow": "Student academic organizer",
     "title": "Your university, organized.",
     "copy": "Manage semesters, track grades, plan your schedule, and never miss a deadline — all in one place.",
@@ -201,6 +212,10 @@
       "namePlaceholder": "Name (e.g. Spring 2025)",
       "yearPlaceholder": "Year"
     },
+    "hint": {
+      "noActiveTitle": "No active semester",
+      "noActiveSub": "Tap the circle icon on a semester to mark it as active. Tasks and grades shown on the home screen use the active semester."
+    },
     "toast": {
       "loadError": "Error loading semesters",
       "created": "Semester created",
@@ -262,7 +277,8 @@
       "deleteMessage": "Delete \"{{name}}\"? Its grade will be removed too.",
       "namePlaceholder": "Name (e.g. Exam 1)",
       "weightPlaceholder": "Weight % (e.g. 25)",
-      "datePlaceholder": "Due / Exam date (optional)"
+      "datePlaceholder": "Due / Exam date (optional)",
+      "notifyPlaceholder": "Notify X days before (e.g. 1, 3, 7)"
     },
     "toast": {
       "loadError": "Error loading evaluations",
@@ -289,6 +305,13 @@
       "universityPlaceholder": "e.g. Universidad Nacional",
       "careerPlaceholder": "e.g. Computer Science"
     },
+    "sections": {
+      "info": "Personal info"
+    },
+    "logout": {
+      "header": "Log out?",
+      "message": "You will be signed out of your account."
+    },
     "btn": {
       "getStarted": "Get Started",
       "saveChanges": "Save Changes"
@@ -313,5 +336,11 @@
       "noDate": "No Date",
       "completed": "Completed"
     }
+  },
+  "notifications": {
+    "title": "UniFlow — Pending Task",
+    "bodyToday": "\"{{name}}\" is due today ({{course}})",
+    "bodyTomorrow": "\"{{name}}\" is due tomorrow ({{course}})",
+    "bodyDays": "\"{{name}}\" is due in {{days}} days ({{course}})"
   }
 }

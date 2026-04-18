@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 
 import { ProfileService } from '../../services/profile.service';
+import { SupabaseService } from '../../services/supabase.service';
+import { ThemeService } from '../../services/theme.service';
+import { LanguageService } from '../../services/language.service';
 
 @Component({
   selector: 'app-profile',
@@ -23,9 +26,13 @@ export class ProfilePage implements OnInit {
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly profileService: ProfileService,
+    private readonly supabase: SupabaseService,
     private readonly loadingCtrl: LoadingController,
     private readonly toastCtrl: ToastController,
+    private readonly alertCtrl: AlertController,
     private readonly translate: TranslateService,
+    readonly themeService: ThemeService,
+    readonly languageService: LanguageService,
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -60,7 +67,7 @@ export class ProfilePage implements OnInit {
       });
 
       if (this.isSetup) {
-        await this.router.navigateByUrl('/home', { replaceUrl: true });
+        await this.router.navigateByUrl('/tabs/home', { replaceUrl: true });
       } else {
         await this.showToast(this.translate.instant('profile.toast.saved'), 'success');
       }
@@ -69,6 +76,27 @@ export class ProfilePage implements OnInit {
     } finally {
       await loading.dismiss();
     }
+  }
+
+  async confirmLogout(): Promise<void> {
+    const alert = await this.alertCtrl.create({
+      header: this.translate.instant('profile.logout.header'),
+      message: this.translate.instant('profile.logout.message'),
+      buttons: [
+        { text: this.translate.instant('common.cancel'), role: 'cancel' },
+        {
+          text: this.translate.instant('auth.logout'),
+          role: 'destructive',
+          handler: () => { void this.logout(); },
+        },
+      ],
+    });
+    await alert.present();
+  }
+
+  private async logout(): Promise<void> {
+    await this.supabase.signOut();
+    await this.router.navigateByUrl('/auth/login', { replaceUrl: true });
   }
 
   private async loadProfile(): Promise<void> {

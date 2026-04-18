@@ -8,6 +8,30 @@
   background: var(--ion-background-color);
 }
 
+// ─── Greeting ────────────────────────────────────────────────────────────────
+.greeting {
+  margin-bottom: 1.75rem;
+  padding-top: 0.25rem;
+}
+
+.greeting__time {
+  margin: 0 0 0.2rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--app-text-tertiary);
+}
+
+.greeting__name {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: var(--ion-text-color);
+  line-height: 1.1;
+}
+
 // ─── Section header ──────────────────────────────────────────────────────────
 .section-header {
   display: flex;
@@ -224,6 +248,13 @@
 .today-list {
   display: grid;
   gap: 0.6rem;
+}
+
+// ─── Section loading ─────────────────────────────────────────────────────────
+.section-loading {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
 }
 
 // ─── Empty state ─────────────────────────────────────────────────────────────

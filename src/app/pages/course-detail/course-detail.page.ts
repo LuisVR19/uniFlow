@@ -4,11 +4,12 @@ import { AlertController, LoadingController, ToastController } from '@ionic/angu
 import { TranslateService } from '@ngx-translate/core';
 
 import { Course } from '../../models/course.model';
-import { CourseEvaluation, EvaluationDraft } from '../../models/evaluation.model';
+import { CourseEvaluation, EvaluationDraft, EvaluationWithCourse } from '../../models/evaluation.model';
 import { Grade } from '../../models/grade.model';
 import { CourseService } from '../../services/course.service';
 import { EvaluationService } from '../../services/evaluation.service';
 import { GradeService } from '../../services/grade.service';
+import { NotificationService } from '../../services/notification.service';
 
 const MIN_PASS = 70;
 
@@ -52,6 +53,7 @@ export class CourseDetailPage implements OnInit {
     private readonly loadingCtrl: LoadingController,
     private readonly toastCtrl: ToastController,
     private readonly translate: TranslateService,
+    private readonly notifService: NotificationService,
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -194,6 +196,7 @@ export class CourseDetailPage implements OnInit {
         { name: 'name', type: 'text', placeholder: this.translate.instant('courseDetail.dialog.namePlaceholder') },
         { name: 'percentage', type: 'number', placeholder: this.translate.instant('courseDetail.dialog.weightPlaceholder') },
         { name: 'due_date', type: 'date', placeholder: this.translate.instant('courseDetail.dialog.datePlaceholder') },
+        { name: 'notify_days_before', type: 'number', placeholder: this.translate.instant('courseDetail.dialog.notifyPlaceholder') },
       ],
       buttons: [
         { text: this.translate.instant('common.cancel'), role: 'cancel' },
@@ -219,6 +222,7 @@ export class CourseDetailPage implements OnInit {
         { name: 'name', type: 'text', placeholder: this.translate.instant('courseDetail.dialog.namePlaceholder'), value: ev.name },
         { name: 'percentage', type: 'number', placeholder: this.translate.instant('courseDetail.dialog.weightPlaceholder'), value: ev.percentage },
         { name: 'due_date', type: 'date', value: ev.due_date ?? '' },
+        { name: 'notify_days_before', type: 'number', placeholder: this.translate.instant('courseDetail.dialog.notifyPlaceholder'), value: ev.notify_days_before ?? '' },
       ],
       buttons: [
         { text: this.translate.instant('common.cancel'), role: 'cancel' },
@@ -273,19 +277,24 @@ export class CourseDetailPage implements OnInit {
     }
   }
 
-  private async createEval(data: { name: string; percentage: string; due_date?: string }): Promise<void> {
+  private async createEval(data: { name: string; percentage: string; due_date?: string; notify_days_before?: string }): Promise<void> {
     const loading = await this.loadingCtrl.create({ message: this.translate.instant('common.loading.creating') });
     await loading.present();
     try {
+      const notifyDays = data.notify_days_before !== '' && data.notify_days_before != null
+        ? Number(data.notify_days_before)
+        : null;
       const draft: EvaluationDraft = {
         course_id: this.courseId,
         name: data.name.trim(),
         percentage: Number(data.percentage),
         max_score: 100,
         due_date: data.due_date || null,
+        notify_days_before: notifyDays,
       };
       const ev = await this.evalService.create(draft);
       this.items.push({ evaluation: ev, grade: null, scoreInput: '', saving: false });
+      await this.notifService.scheduleForEvaluation(this.toEvalWithCourse(ev));
     } catch {
       await this.showToast(this.translate.instant('courseDetail.toast.createError'), 'danger');
     } finally {
@@ -293,18 +302,23 @@ export class CourseDetailPage implements OnInit {
     }
   }
 
-  private async updateEval(id: string, data: { name: string; percentage: string; due_date?: string }): Promise<void> {
+  private async updateEval(id: string, data: { name: string; percentage: string; due_date?: string; notify_days_before?: string }): Promise<void> {
     const loading = await this.loadingCtrl.create({ message: this.translate.instant('common.loading.saving') });
     await loading.present();
     try {
+      const notifyDays = data.notify_days_before !== '' && data.notify_days_before != null
+        ? Number(data.notify_days_before)
+        : null;
       const updated = await this.evalService.update(id, {
         name: data.name.trim(),
         percentage: Number(data.percentage),
         max_score: 100,
         due_date: data.due_date || null,
+        notify_days_before: notifyDays,
       });
       const idx = this.items.findIndex((i) => i.evaluation.id === id);
       if (idx !== -1) this.items[idx].evaluation = updated;
+      await this.notifService.scheduleForEvaluation(this.toEvalWithCourse(updated));
     } catch {
       await this.showToast(this.translate.instant('courseDetail.toast.updateError'), 'danger');
     } finally {
@@ -317,12 +331,20 @@ export class CourseDetailPage implements OnInit {
     await loading.present();
     try {
       await this.evalService.delete(id);
+      await this.notifService.cancelForEvaluation(id);
       this.items = this.items.filter((i) => i.evaluation.id !== id);
     } catch {
       await this.showToast(this.translate.instant('courseDetail.toast.deleteError'), 'danger');
     } finally {
       await loading.dismiss();
     }
+  }
+
+  private toEvalWithCourse(ev: CourseEvaluation): EvaluationWithCourse {
+    return {
+      ...ev,
+      course: { id: this.course!.id, name: this.course!.name, color: this.course!.color },
+    };
   }
 
   private async showToast(message: string, color: string): Promise<void> {

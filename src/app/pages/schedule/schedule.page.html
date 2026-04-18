@@ -1,12 +1,9 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
-    </ion-buttons>
     <ion-title>{{ 'schedule.title' | translate }}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="confirmClearSchedule()" class="clear-btn" [attr.aria-label]="'schedule.clear.button' | translate">
-        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        <ion-icon slot="icon-only" name="close-circle-outline"></ion-icon>
       </ion-button>
       <ion-button (click)="openExportSheet()" class="export-btn" [attr.aria-label]="'schedule.export.button' | translate">
         <ion-icon slot="icon-only" name="share-outline"></ion-icon>

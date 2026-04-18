@@ -11,7 +11,7 @@ import {
   WEEK_DAYS,
   WeekdayKey,
 } from '../models/event.model';
-import { StorageService } from './storage.service';
+import { SupabaseService } from './supabase.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,8 +21,30 @@ export class ScheduleService {
 
   readonly events$: Observable<ScheduleEvent[]> = this.eventsSubject.asObservable();
 
-  constructor(private readonly storageService: StorageService) {
-    this.initialize();
+  constructor(private readonly supabase: SupabaseService) {
+    void this.load();
+  }
+
+  async load(): Promise<void> {
+    const { data, error } = await this.supabase.db
+      .from('schedule_events')
+      .select('*');
+    if (error) return;
+
+    const events = (data ?? [])
+      .map((row) => ({
+        id: row['id'] as string,
+        title: row['title'] as string,
+        day: row['day'] as WeekdayKey,
+        startTime: row['start_time'] as string,
+        endTime: row['end_time'] as string,
+        description: (row['description'] as string | null) ?? undefined,
+        color: row['color'] as string,
+        course_id: (row['course_id'] as string | null) ?? null,
+      }))
+      .filter((e) => this.isValidEvent(e));
+
+    this.eventsSubject.next(this.sortEvents(events));
   }
 
   getEvents(): Observable<ScheduleEvent[]> {
@@ -56,7 +78,8 @@ export class ScheduleService {
     }
 
     const nextEvents = this.sortEvents([...this.eventsSubject.value, candidate]);
-    this.persist(nextEvents);
+    this.eventsSubject.next(nextEvents);
+    void this.dbInsert(candidate);
     return { success: true };
   }
 
@@ -75,17 +98,20 @@ export class ScheduleService {
     const nextEvents = this.sortEvents(
       this.eventsSubject.value.map((event) => (event.id === candidate.id ? candidate : event)),
     );
-    this.persist(nextEvents);
+    this.eventsSubject.next(nextEvents);
+    void this.dbUpdate(candidate);
     return { success: true };
   }
 
   deleteEvent(eventId: string): void {
     const nextEvents = this.eventsSubject.value.filter((event) => event.id !== eventId);
-    this.persist(nextEvents);
+    this.eventsSubject.next(nextEvents);
+    void this.supabase.db.from('schedule_events').delete().eq('id', eventId);
   }
 
   clearAllEvents(): void {
-    this.persist([]);
+    this.eventsSubject.next([]);
+    void this.dbClear();
   }
 
   moveEvent(eventId: string, targetDay: WeekdayKey, targetStartMinutes: number): ScheduleMutationResult {
@@ -155,57 +181,46 @@ export class ScheduleService {
     return `${normalizedHours}:${normalizedMinutes}`;
   }
 
-  private initialize(): void {
-    const storedEvents = this.storageService.loadEvents();
-    const sanitizedEvents = storedEvents.filter((event) => this.isValidEvent(event));
+  private async dbInsert(event: ScheduleEvent): Promise<void> {
+    const { data: { user } } = await this.supabase.db.auth.getUser();
+    if (!user) return;
 
-    if (sanitizedEvents.length > 0) {
-      this.eventsSubject.next(this.sortEvents(sanitizedEvents));
-      return;
-    }
-
-    const sampleEvents: ScheduleEvent[] = [
-      {
-        id: this.createEventId(),
-        title: 'Math Class',
-        day: 'monday',
-        startTime: '08:00',
-        endTime: '10:00',
-        description: 'Room 201',
-        color: '#4f7cff',
-      },
-      {
-        id: this.createEventId(),
-        title: 'Programming',
-        day: 'wednesday',
-        startTime: '13:00',
-        endTime: '15:00',
-        description: 'Lab B',
-        color: '#2db9a3',
-      },
-      {
-        id: this.createEventId(),
-        title: 'Gym',
-        day: 'friday',
-        startTime: '18:00',
-        endTime: '19:00',
-        description: 'Sports Center',
-        color: '#ff8c5a',
-      },
-    ];
-
-    this.persist(sampleEvents);
+    await this.supabase.db.from('schedule_events').insert({
+      id: event.id,
+      user_id: user.id,
+      title: event.title,
+      day: event.day,
+      start_time: event.startTime,
+      end_time: event.endTime,
+      description: event.description ?? null,
+      color: event.color,
+      course_id: event.course_id ?? null,
+    });
   }
 
-  private persist(events: ScheduleEvent[]): void {
-    this.eventsSubject.next(events);
-    this.storageService.saveEvents(events);
+  private async dbUpdate(event: ScheduleEvent): Promise<void> {
+    await this.supabase.db.from('schedule_events').update({
+      title: event.title,
+      day: event.day,
+      start_time: event.startTime,
+      end_time: event.endTime,
+      description: event.description ?? null,
+      color: event.color,
+      course_id: event.course_id ?? null,
+    }).eq('id', event.id);
+  }
+
+  private async dbClear(): Promise<void> {
+    const { data: { user } } = await this.supabase.db.auth.getUser();
+    if (!user) return;
+    await this.supabase.db.from('schedule_events').delete().eq('user_id', user.id);
   }
 
   private sortEvents(events: ScheduleEvent[]): ScheduleEvent[] {
     return [...events].sort((left, right) => {
-      const dayDifference = WEEK_DAYS.findIndex((day) => day.value === left.day)
-        - WEEK_DAYS.findIndex((day) => day.value === right.day);
+      const dayDifference =
+        WEEK_DAYS.findIndex((day) => day.value === left.day) -
+        WEEK_DAYS.findIndex((day) => day.value === right.day);
 
       if (dayDifference !== 0) {
         return dayDifference;
@@ -226,12 +241,12 @@ export class ScheduleService {
 
   private isValidEvent(event: ScheduleEvent): boolean {
     return Boolean(
-      event.id
-      && event.title
-      && DAY_VALUE_SET.has(event.day)
-      && typeof event.startTime === 'string'
-      && typeof event.endTime === 'string'
-      && !this.isOutsideSchedule(event.startTime, event.endTime),
+      event.id &&
+        event.title &&
+        DAY_VALUE_SET.has(event.day) &&
+        typeof event.startTime === 'string' &&
+        typeof event.endTime === 'string' &&
+        !this.isOutsideSchedule(event.startTime, event.endTime),
     );
   }
 }

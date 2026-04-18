@@ -50,7 +50,7 @@ export class LoginPage {
       return;
     }
 
-    this.router.navigateByUrl('/home', { replaceUrl: true });
+    this.router.navigateByUrl('/tabs/home', { replaceUrl: true });
   }
 
   private resolveError(message: string): string {

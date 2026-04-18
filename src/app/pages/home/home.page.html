@@ -1,6 +1,11 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>UniFlow</ion-title>
+    <ion-title>
+      <span class="nav-title-wrap">
+        <img src="assets/Uniflow-logo.svg" alt="" class="nav-logo" />
+        UniFlow
+      </span>
+    </ion-title>
     <ion-buttons slot="end">
       <ion-button
         fill="clear"
@@ -21,12 +26,6 @@
           [name]="(themeService.isDark$ | async) ? 'sunny-outline' : 'moon-outline'"
         ></ion-icon>
       </ion-button>
-      <ion-button fill="clear" (click)="goToProfile()" [attr.aria-label]="'profile.title' | translate">
-        <div class="toolbar-avatar" slot="icon-only">{{ initials }}</div>
-      </ion-button>
-      <ion-button fill="clear" (click)="logout()" [attr.aria-label]="'auth.logout' | translate">
-        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
-      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -34,20 +33,31 @@
 <ion-content [fullscreen]="true">
   <div class="home-page">
 
+    <!-- Greeting -->
+    <div class="greeting animate-fade-up">
+      <p class="greeting__time">{{ greetingKey | translate }}</p>
+      <h1 class="greeting__name" *ngIf="firstName">{{ firstName }} 👋</h1>
+      <h1 class="greeting__name" *ngIf="!firstName">UniFlow</h1>
+    </div>
+
     <!-- 1. Evaluaciones próximas — lo más urgente -->
-    <section class="upcoming-section animate-fade-up">
+    <section class="upcoming-section animate-fade-up" style="animation-delay: 0.04s">
       <div class="section-header">
         <div>
           <p class="section-header__eyebrow">{{ 'home.upcoming.eyebrow' | translate }}</p>
           <h2 class="section-header__title">{{ 'home.upcoming.title' | translate }}</h2>
         </div>
-        <ion-button fill="clear" size="small" routerLink="/tasks" class="see-all-btn">
+        <ion-button fill="clear" size="small" routerLink="/tabs/tasks" class="see-all-btn">
           {{ 'home.upcoming.seeAll' | translate }}
           <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
         </ion-button>
       </div>
 
-      <div class="empty-state animate-scale-in" *ngIf="upcomingTasks.length === 0">
+      <div class="section-loading" *ngIf="loadingTasks">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
+
+      <div class="empty-state animate-scale-in" *ngIf="!loadingTasks && upcomingTasks.length === 0">
         <div class="empty-state__icon">
           <ion-icon name="checkmark-done-outline"></ion-icon>
         </div>
@@ -55,7 +65,7 @@
         <p class="empty-state__sub">{{ 'home.upcoming.empty.sub' | translate }}</p>
       </div>
 
-      <div class="upcoming-list" *ngIf="upcomingTasks.length > 0">
+      <div class="upcoming-list" *ngIf="!loadingTasks && upcomingTasks.length > 0">
         <div
           class="upcoming-card"
           *ngFor="let task of upcomingTasks"
@@ -68,7 +78,9 @@
           </div>
           <div class="upcoming-card__right">
             <span class="upcoming-card__due upcoming-card__due--{{ dueDateClass(task.daysLeft) }}">
-              {{ dueDateLabel(task) }}
+              <ng-container *ngIf="task.daysLeft === 0">{{ 'home.upcoming.dueToday' | translate }}</ng-container>
+              <ng-container *ngIf="task.daysLeft === 1">{{ 'home.upcoming.dueTomorrow' | translate }}</ng-container>
+              <ng-container *ngIf="task.daysLeft >= 2">{{ 'home.upcoming.dueInDays' | translate:{ days: task.daysLeft } }}</ng-container>
             </span>
             <span class="upcoming-card__weight">{{ task.evaluation.percentage }}%</span>
           </div>
@@ -77,13 +89,13 @@
     </section>
 
     <!-- 2. Horario de hoy -->
-    <section class="today-section animate-fade-up" style="animation-delay: 0.06s">
+    <section class="today-section animate-fade-up" style="animation-delay: 0.08s">
       <div class="section-header">
         <div>
           <p class="section-header__eyebrow">{{ 'home.today.label' | translate }}</p>
           <h2 class="section-header__title">{{ todayLabel }}</h2>
         </div>
-        <ion-button fill="clear" size="small" routerLink="/schedule" class="see-all-btn">
+        <ion-button fill="clear" size="small" routerLink="/tabs/schedule" class="see-all-btn">
           {{ 'home.today.seeAll' | translate }}
           <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
         </ion-button>
@@ -112,7 +124,7 @@
       <div class="section-header">
         <div>
           <p class="section-header__eyebrow">{{ 'home.university.eyebrow' | translate }}</p>
-          <h2 class="section-header__title">{{ universityTitle }}</h2>
+          <h2 class="section-header__title">{{ profile?.university || ('home.university.title' | translate) }}</h2>
         </div>
       </div>
 
@@ -128,7 +140,7 @@
           <ion-icon name="chevron-forward-outline" class="nav-item__arrow"></ion-icon>
         </button>
 
-        <button class="nav-item" routerLink="/tasks">
+        <button class="nav-item" routerLink="/tabs/tasks">
           <div class="nav-item__icon nav-item__icon--amber">
             <ion-icon name="clipboard-outline"></ion-icon>
           </div>
@@ -139,7 +151,7 @@
           <ion-icon name="chevron-forward-outline" class="nav-item__arrow"></ion-icon>
         </button>
 
-        <button class="nav-item" routerLink="/schedule">
+        <button class="nav-item" routerLink="/tabs/schedule">
           <div class="nav-item__icon nav-item__icon--indigo">
             <ion-icon name="calendar-outline"></ion-icon>
           </div>

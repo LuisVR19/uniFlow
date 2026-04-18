@@ -16,6 +16,10 @@ export class SemestersPage implements OnInit {
   semesters: Semester[] = [];
   loading = false;
 
+  get hasActive(): boolean {
+    return this.semesters.some((s) => s.is_active);
+  }
+
   constructor(
     private readonly semesterService: SemesterService,
     private readonly alertCtrl: AlertController,

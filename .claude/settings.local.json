@@ -23,7 +23,12 @@
       "Bash(git stash *)",
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "mcp__supabase__list_tables",
+      "mcp__supabase__execute_sql",
+      "Bash(npx cap *)",
+      "Bash(npm run *)",
+      "Bash(npx capacitor-assets *)"
     ]
   },
   "enableAllProjectMcpServers": true,

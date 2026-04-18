@@ -43,6 +43,7 @@
     padding: 18px;
     margin-bottom: 24px;
     box-shadow: var(--app-shadow-md);
+    border: 1px solid var(--app-border);
 
     &__top {
       display: flex;
@@ -193,6 +194,7 @@
     border-radius: 16px;
     padding: 14px 16px;
     box-shadow: var(--app-shadow-sm);
+    border: 1px solid var(--app-border);
 
     &__header {
       display: flex;
@@ -259,7 +261,7 @@
       --border-radius: 8px;
       font-size: 15px;
       font-weight: 600;
-      min-height: 36px;
+      min-height: 44px;
       max-width: 90px;
     }
 

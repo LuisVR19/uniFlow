@@ -12,6 +12,9 @@ import { ExportService } from '../../services/export.service';
   standalone: false,
 })
 export class SchedulePage {
+  async ionViewWillEnter(): Promise<void> {
+    await this.scheduleService.load();
+  }
   @ViewChild('gridShell', { static: false })
   private readonly gridShell!: ElementRef<HTMLElement>;
 

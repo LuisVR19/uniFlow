@@ -90,15 +90,54 @@ export class ExportService {
         .getPropertyValue('--ion-background-color')
         .trim() || '#f8fafc';
 
-    return html2canvas(element, {
-      scale,
-      useCORS: true,
-      allowTaint: true,
-      backgroundColor,
-      logging: false,
-      width: element.scrollWidth,
-      height: element.scrollHeight,
-      windowWidth: element.scrollWidth,
-    });
+    let cleanup: (() => void) | null = null;
+    if (Capacitor.isNativePlatform()) {
+      cleanup = this.expandGridForExport(element);
+      await new Promise<void>((r) => setTimeout(r, 150));
+    }
+
+    try {
+      return await html2canvas(element, {
+        scale,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor,
+        logging: false,
+        width: element.scrollWidth,
+        height: element.scrollHeight,
+        windowWidth: 1200,
+      });
+    } finally {
+      cleanup?.();
+    }
+  }
+
+  private expandGridForExport(grid: HTMLElement): () => void {
+    const header  = grid.querySelector<HTMLElement>('.schedule-grid__header');
+    const tabs    = grid.querySelector<HTMLElement>('.schedule-grid__day-tabs');
+    const days    = grid.querySelector<HTMLElement>('.schedule-grid__days');
+    const columns = Array.from(grid.querySelectorAll<HTMLElement>('.schedule-grid__day-column'));
+
+    const prev = {
+      gridMinWidth:  grid.style.minWidth,
+      headerDisplay: header?.style.display,
+      tabsDisplay:   tabs?.style.display,
+      daysTemplate:  days?.style.gridTemplateColumns,
+      columnDisplay: columns.map((c) => c.style.display),
+    };
+
+    grid.style.minWidth = '660px';
+    if (header) header.style.display = 'grid';
+    if (tabs)   tabs.style.display   = 'none';
+    if (days)   days.style.gridTemplateColumns = 'repeat(7, minmax(82px, 1fr))';
+    columns.forEach((c) => { c.style.display = 'grid'; });
+
+    return () => {
+      grid.style.minWidth = prev.gridMinWidth;
+      if (header) header.style.display = prev.headerDisplay ?? '';
+      if (tabs)   tabs.style.display   = prev.tabsDisplay   ?? '';
+      if (days)   days.style.gridTemplateColumns = prev.daysTemplate ?? '';
+      columns.forEach((c, i) => { c.style.display = prev.columnDisplay[i]; });
+    };
   }
 }

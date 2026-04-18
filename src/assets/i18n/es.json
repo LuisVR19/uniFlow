@@ -22,7 +22,18 @@
       "inactive": "Inactivo"
     }
   },
+  "tabs": {
+    "home": "Inicio",
+    "schedule": "Horario",
+    "tasks": "Tareas",
+    "profile": "Perfil"
+  },
   "home": {
+    "greeting": {
+      "morning": "Buenos días",
+      "afternoon": "Buenas tardes",
+      "evening": "Buenas noches"
+    },
     "eyebrow": "Organizador académico estudiantil",
     "title": "Tu universidad, organizada.",
     "copy": "Gestiona semestres, lleva el seguimiento de tus notas, planifica tu horario y nunca pierdas una fecha — todo en un solo lugar.",
@@ -201,6 +212,10 @@
       "namePlaceholder": "Nombre (ej. Primer Semestre 2025)",
       "yearPlaceholder": "Año"
     },
+    "hint": {
+      "noActiveTitle": "Ningún semestre activo",
+      "noActiveSub": "Toca el ícono de círculo en un semestre para marcarlo como activo. Las tareas y notas del inicio usan el semestre activo."
+    },
     "toast": {
       "loadError": "Error al cargar semestres",
       "created": "Semestre creado",
@@ -262,7 +277,8 @@
       "deleteMessage": "¿Eliminar \"{{name}}\"? También se eliminará su nota.",
       "namePlaceholder": "Nombre (ej. Examen 1)",
       "weightPlaceholder": "Peso % (ej. 25)",
-      "datePlaceholder": "Fecha de entrega / examen (opcional)"
+      "datePlaceholder": "Fecha de entrega / examen (opcional)",
+      "notifyPlaceholder": "Notificar X días antes (ej: 1, 3, 7)"
     },
     "toast": {
       "loadError": "Error al cargar evaluaciones",
@@ -289,6 +305,13 @@
       "universityPlaceholder": "ej. Universidad Nacional",
       "careerPlaceholder": "ej. Ingeniería Informática"
     },
+    "sections": {
+      "info": "Información personal"
+    },
+    "logout": {
+      "header": "¿Cerrar sesión?",
+      "message": "Se cerrará la sesión de tu cuenta."
+    },
     "btn": {
       "getStarted": "Comenzar",
       "saveChanges": "Guardar Cambios"
@@ -313,5 +336,11 @@
       "noDate": "Sin Fecha",
       "completed": "Completadas"
     }
+  },
+  "notifications": {
+    "title": "UniFlow — Tarea Pendiente",
+    "bodyToday": "\"{{name}}\" vence hoy ({{course}})",
+    "bodyTomorrow": "\"{{name}}\" vence mañana ({{course}})",
+    "bodyDays": "\"{{name}}\" vence en {{days}} días ({{course}})"
   }
 }

@@ -37,21 +37,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 32px;
+  margin-bottom: 28px;
 }
 
 .avatar {
-  width: 80px;
-  height: 80px;
+  width: 88px;
+  height: 88px;
   border-radius: 50%;
   background: var(--ion-color-primary);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  box-shadow: var(--app-shadow-lg);
 
   span {
-    font-size: 26px;
+    font-size: 28px;
     font-weight: 800;
     color: #fff;
     line-height: 1;
@@ -72,9 +73,16 @@
 }
 
 .avatar__name {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   color: var(--ion-text-color);
+  margin: 0 0 4px;
+  letter-spacing: -0.02em;
+}
+
+.avatar__career {
+  font-size: 13px;
+  color: var(--app-text-secondary);
   margin: 0;
 }
 
@@ -90,6 +98,15 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+
+  &__label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--app-text-tertiary);
+    margin: 0 0 -4px;
+  }
 }
 
 .field {
@@ -117,10 +134,30 @@
 }
 
 .save-btn {
-  margin-top: 8px;
+  margin-top: 4px;
   --border-radius: 12px;
   font-weight: 700;
   font-size: 16px;
+}
+
+// ─── Logout ───────────────────────────────────────────────────────────────────
+.logout-section {
+  margin-top: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--app-border);
+}
+
+.logout-btn {
+  --border-radius: 12px;
+  font-weight: 600;
+}
+
+// ─── Lang toggle ─────────────────────────────────────────────────────────────
+.lang-toggle-btn {
+  --color: var(--ion-color-primary);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
 }
 
 // ─── Responsive ──────────────────────────────────────────────────────────────

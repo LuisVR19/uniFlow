@@ -84,6 +84,7 @@
     border-radius: 16px;
     overflow: hidden;
     box-shadow: var(--app-shadow-sm);
+    border: 1px solid var(--app-border);
 
     &__color-bar {
       height: 8px;

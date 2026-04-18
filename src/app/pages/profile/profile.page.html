@@ -1,9 +1,14 @@
 <ion-header [translucent]="true" *ngIf="!isSetup">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
-    </ion-buttons>
     <ion-title>{{ 'profile.title' | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" class="lang-toggle-btn" (click)="languageService.toggle()">
+        {{ (languageService.lang$ | async) === 'en' ? 'ES' : 'EN' }}
+      </ion-button>
+      <ion-button fill="clear" (click)="themeService.toggle()">
+        <ion-icon slot="icon-only" [name]="(themeService.isDark$ | async) ? 'sunny-outline' : 'moon-outline'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -23,6 +28,7 @@
         <ion-icon *ngIf="!fullName" name="person-outline"></ion-icon>
       </div>
       <p class="avatar__name" *ngIf="fullName && !isSetup">{{ fullName }}</p>
+      <p class="avatar__career" *ngIf="career && !isSetup">{{ career }}</p>
     </div>
 
     <!-- Loading -->
@@ -32,6 +38,8 @@
 
     <!-- Form -->
     <div class="form-section" *ngIf="!loading">
+
+      <p class="form-section__label" *ngIf="!isSetup">{{ 'profile.sections.info' | translate }}</p>
 
       <div class="field">
         <ion-label class="field__label">
@@ -77,6 +85,20 @@
         {{ (isSetup ? 'profile.btn.getStarted' : 'profile.btn.saveChanges') | translate }}
         <ion-icon slot="end" [name]="isSetup ? 'arrow-forward-outline' : 'checkmark-outline'"></ion-icon>
       </ion-button>
+
+      <!-- Logout -->
+      <div class="logout-section" *ngIf="!isSetup">
+        <ion-button
+          expand="block"
+          fill="outline"
+          color="danger"
+          class="logout-btn"
+          (click)="confirmLogout()"
+        >
+          <ion-icon slot="start" name="log-out-outline"></ion-icon>
+          {{ 'auth.logout' | translate }}
+        </ion-button>
+      </div>
 
     </div>
 

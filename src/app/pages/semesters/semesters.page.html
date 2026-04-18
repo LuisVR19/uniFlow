@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+      <ion-back-button defaultHref="/tabs/home"></ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'semesters.title' | translate }}</ion-title>
     <ion-buttons slot="end">
@@ -25,6 +25,14 @@
       </div>
       <h2 class="empty-state__title">{{ 'semesters.empty.title' | translate }}</h2>
       <p class="empty-state__sub">{{ 'semesters.empty.sub' | translate }}</p>
+    </div>
+
+    <div class="active-hint" *ngIf="!loading && semesters.length > 0 && !hasActive">
+      <ion-icon name="information-circle-outline"></ion-icon>
+      <div class="active-hint__text">
+        <span class="active-hint__title">{{ 'semesters.hint.noActiveTitle' | translate }}</span>
+        <span class="active-hint__sub">{{ 'semesters.hint.noActiveSub' | translate }}</span>
+      </div>
     </div>
 
     <div class="semester-list" *ngIf="!loading && semesters.length > 0">
@@ -60,10 +68,10 @@
               ></ion-icon>
             </ion-button>
             <ion-button fill="clear" size="small" (click)="openEditDialog(semester, $event)">
-              <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+              <ion-icon slot="icon-only" name="create-outline"></ion-icon>
             </ion-button>
             <ion-button fill="clear" size="small" color="danger" (click)="confirmDelete(semester, $event)">
-              <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+              <ion-icon slot="icon-only" name="close-circle-outline"></ion-icon>
             </ion-button>
           </div>
           <ion-icon name="chevron-forward-outline" class="semester-card__arrow"></ion-icon>
