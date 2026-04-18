@@ -1,2 +1,131 @@
-// For information on how to create your own theme, please refer to:
-// https://ionicframework.com/docs/theming/
+// ─── Light theme ────────────────────────────────────────────────────────────
+:root {
+  --ion-font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  // ─── Ionic color system ─────────────────────────────────────────────────
+  --ion-color-primary: #4F46E5;
+  --ion-color-primary-rgb: 79, 70, 229;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #4338CA;
+  --ion-color-primary-tint: #6366F1;
+
+  --ion-color-secondary: #0EA5E9;
+  --ion-color-secondary-rgb: 14, 165, 233;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #0284C7;
+  --ion-color-secondary-tint: #38BDF8;
+
+  --ion-color-success: #10B981;
+  --ion-color-success-rgb: 16, 185, 129;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-shade: #059669;
+  --ion-color-success-tint: #34D399;
+
+  --ion-color-warning: #F59E0B;
+  --ion-color-warning-rgb: 245, 158, 11;
+  --ion-color-warning-contrast: #ffffff;
+  --ion-color-warning-shade: #D97706;
+  --ion-color-warning-tint: #FBBF24;
+
+  --ion-color-danger: #EF4444;
+  --ion-color-danger-rgb: 239, 68, 68;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-shade: #DC2626;
+  --ion-color-danger-tint: #F87171;
+
+  --ion-color-light: #F1F5F9;
+  --ion-color-light-rgb: 241, 245, 249;
+  --ion-color-light-contrast: #0F172A;
+  --ion-color-light-contrast-rgb: 15, 23, 42;
+  --ion-color-light-shade: #CBD5E1;
+  --ion-color-light-tint: #F8FAFC;
+
+  --ion-color-medium: #64748B;
+  --ion-color-medium-rgb: 100, 116, 139;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-shade: #475569;
+  --ion-color-medium-tint: #94A3B8;
+
+  --ion-color-dark: #0F172A;
+  --ion-color-dark-rgb: 15, 23, 42;
+  --ion-color-dark-contrast: #ffffff;
+  --ion-color-dark-shade: #020617;
+  --ion-color-dark-tint: #1E293B;
+
+  // ─── Surface & background ───────────────────────────────────────────────
+  --ion-background-color: #F8FAFC;
+  --ion-background-color-rgb: 248, 250, 252;
+  --ion-text-color: #0F172A;
+  --ion-text-color-rgb: 15, 23, 42;
+
+  // ─── Toolbar ────────────────────────────────────────────────────────────
+  --ion-toolbar-background: rgba(248, 250, 252, 0.88);
+  --ion-toolbar-color: #0F172A;
+
+  // ─── Cards & items ──────────────────────────────────────────────────────
+  --ion-card-background: #ffffff;
+  --ion-item-background: #ffffff;
+  --ion-border-color: rgba(15, 23, 42, 0.08);
+
+  // ─── App custom design tokens ────────────────────────────────────────────
+  --app-text-secondary: #64748B;
+  --app-text-tertiary: #94A3B8;
+  --app-surface-2: #F1F5F9;
+  --app-border: rgba(15, 23, 42, 0.08);
+  --app-border-strong: rgba(15, 23, 42, 0.14);
+  --app-chip-primary-bg: rgba(79, 70, 229, 0.12);
+  --app-chip-primary-color: #4338CA;
+
+  // Shadows (layered for depth)
+  --app-shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --app-shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --app-shadow-md: 0 4px 8px rgba(15, 23, 42, 0.07), 0 2px 4px rgba(15, 23, 42, 0.04);
+  --app-shadow-lg: 0 10px 24px rgba(15, 23, 42, 0.09), 0 4px 8px rgba(15, 23, 42, 0.04);
+  --app-shadow-xl: 0 20px 40px rgba(15, 23, 42, 0.10), 0 8px 16px rgba(15, 23, 42, 0.04);
+
+  // Border radius scale
+  --app-radius-xs: 6px;
+  --app-radius-sm: 8px;
+  --app-radius-md: 12px;
+  --app-radius-lg: 16px;
+  --app-radius-xl: 20px;
+  --app-radius-2xl: 24px;
+  --app-radius-3xl: 32px;
+
+  // Layout
+  --app-page-padding: 1.25rem;
+
+  // Motion
+  --app-transition-fast: 100ms cubic-bezier(0.4, 0, 0.2, 1);
+  --app-transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --app-transition-slow: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// ─── Dark theme — activated by ThemeService adding .ion-palette-dark to <html>
+:root.ion-palette-dark {
+  --ion-background-color: #0F172A;
+  --ion-background-color-rgb: 15, 23, 42;
+  --ion-text-color: #F1F5F9;
+  --ion-text-color-rgb: 241, 245, 249;
+
+  --ion-toolbar-background: rgba(15, 23, 42, 0.92);
+  --ion-toolbar-color: #F1F5F9;
+  --ion-card-background: #1E293B;
+  --ion-item-background: #1E293B;
+  --ion-border-color: rgba(241, 245, 249, 0.08);
+
+  --app-text-secondary: #94A3B8;
+  --app-text-tertiary: #64748B;
+  --app-surface-2: #1E293B;
+  --app-border: rgba(241, 245, 249, 0.08);
+  --app-border-strong: rgba(241, 245, 249, 0.16);
+  --app-chip-primary-bg: rgba(99, 102, 241, 0.20);
+  --app-chip-primary-color: #818CF8;
+  --app-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --app-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --app-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.15);
+  --app-shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.35), 0 4px 8px rgba(0, 0, 0, 0.2);
+  --app-shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.4), 0 8px 16px rgba(0, 0, 0, 0.25);
+}

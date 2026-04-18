@@ -1,0 +1,132 @@
+.profile-page {
+  padding: 24px 20px 48px;
+  min-height: 100%;
+
+  &--setup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: env(safe-area-inset-top, 24px);
+    min-height: 100vh;
+  }
+}
+
+// ─── Setup hero ──────────────────────────────────────────────────────────────
+.setup-hero {
+  text-align: center;
+  margin-bottom: 32px;
+
+  &__title {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--ion-text-color);
+    margin: 0 0 8px;
+  }
+
+  &__sub {
+    font-size: 15px;
+    color: var(--ion-color-medium);
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+// ─── Avatar ──────────────────────────────────────────────────────────────────
+.avatar-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--ion-color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+
+  span {
+    font-size: 26px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+  }
+
+  ion-icon {
+    font-size: 36px;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  &--placeholder {
+    background: var(--ion-color-light-shade);
+
+    ion-icon {
+      color: var(--ion-color-medium);
+    }
+  }
+}
+
+.avatar__name {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ion-text-color);
+  margin: 0;
+}
+
+// ─── Loading ─────────────────────────────────────────────────────────────────
+.loading-state {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+// ─── Form ────────────────────────────────────────────────────────────────────
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  &__label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ion-color-medium-shade);
+    padding-left: 2px;
+  }
+
+  &__required {
+    color: var(--ion-color-danger);
+  }
+
+  &__input {
+    --border-radius: 10px;
+    --padding-start: 14px;
+    --padding-end: 14px;
+    font-size: 15px;
+  }
+}
+
+.save-btn {
+  margin-top: 8px;
+  --border-radius: 12px;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+// ─── Responsive ──────────────────────────────────────────────────────────────
+@media (min-width: 768px) {
+  .profile-page {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+}

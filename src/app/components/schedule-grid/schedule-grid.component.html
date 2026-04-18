@@ -1,0 +1,58 @@
+<section class="schedule-grid">
+  <!-- Mobile: day tab selector (hidden on desktop) -->
+  <div class="schedule-grid__day-tabs">
+    <button
+      *ngFor="let day of weekDays; let i = index"
+      class="schedule-grid__day-tab"
+      [class.active]="i === activeDayIndex"
+      (click)="selectDay(i)"
+    >
+      {{ 'days.' + day.value + '_short' | translate }}
+    </button>
+  </div>
+
+  <!-- Desktop: column headers (hidden on mobile) -->
+  <div class="schedule-grid__header">
+    <div class="schedule-grid__time-spacer"></div>
+    <div class="schedule-grid__day-header" *ngFor="let day of weekDays">
+      <span>{{ 'days.' + day.value + '_short' | translate }}</span>
+      <small>{{ 'days.' + day.value | translate }}</small>
+    </div>
+  </div>
+
+  <div class="schedule-grid__body">
+    <div class="schedule-grid__time-column">
+      <div class="schedule-grid__time-cell" *ngFor="let slot of timeSlots; let index = index">
+        {{ getDisplayLabel(index) }}
+      </div>
+    </div>
+
+    <div class="schedule-grid__days" cdkDropListGroup>
+      <div
+        class="schedule-grid__day-column"
+        *ngFor="let day of dayColumns; let i = index"
+        [class.is-active]="i === activeDayIndex"
+        cdkDropList
+        [id]="'day-col-' + day.value"
+        [cdkDropListData]="day.value"
+        [cdkDropListSortingDisabled]="true"
+        (cdkDropListDropped)="onDrop($event)"
+      >
+        <div
+          class="schedule-grid__slot"
+          [id]="slot.id"
+          *ngFor="let slot of day.slots; trackBy: trackBySlot"
+        >
+          <app-event-card
+            *ngIf="getEvent(slot) as scheduleEvent"
+            [event]="scheduleEvent"
+            [draggable]="true"
+            [height]="getEventHeight(scheduleEvent)"
+            (dragStarted)="onDragStarted()"
+            (dragEnded)="onDragEnded()"
+          ></app-event-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

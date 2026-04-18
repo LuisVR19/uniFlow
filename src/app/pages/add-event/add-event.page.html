@@ -1,0 +1,217 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'addEvent.pageTitle' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="add-event-page">
+    <form [formGroup]="form" (ngSubmit)="saveEvent()">
+
+      <div class="form-card animate-fade-up">
+        <p class="form-card__heading">{{ 'addEvent.sections.details' | translate }}</p>
+
+        <div class="form-stack">
+          <div class="field-group">
+            <label class="field-label" for="event-title">{{ 'addEvent.fields.titleLabel' | translate }}</label>
+            <ion-input
+              id="event-title"
+              [placeholder]="'addEvent.fields.titlePlaceholder' | translate"
+              formControlName="title"
+              fill="outline"
+            ></ion-input>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">{{ 'addEvent.fields.daysLabel' | translate }}</label>
+            <div class="day-chips">
+              <button
+                *ngFor="let day of weekDays"
+                type="button"
+                class="day-chip"
+                [class.selected]="isDaySelected(day.value)"
+                (click)="toggleDay(day.value)"
+              >
+                {{ 'days.' + day.value + '_short' | translate }}
+              </button>
+            </div>
+          </div>
+
+          <!-- Course link — only shown when there are courses in the active semester -->
+          <div class="field-group" *ngIf="courses.length > 0">
+            <label class="field-label">
+              {{ 'addEvent.fields.courseLabel' | translate }}
+              <span class="optional-tag">({{ 'common.optional' | translate }})</span>
+            </label>
+            <div class="course-picker">
+              <button
+                type="button"
+                class="course-pill course-pill--none"
+                [class.course-pill--selected]="!selectedCourseId"
+                (click)="selectCourse(null)"
+              >
+                {{ 'common.none' | translate }}
+              </button>
+              <button
+                type="button"
+                class="course-pill"
+                [class.course-pill--selected]="selectedCourseId === course.id"
+                *ngFor="let course of courses"
+                (click)="selectCourse(course)"
+              >
+                <div class="course-pill__dot" [style.background]="course.color"></div>
+                {{ course.name }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card animate-fade-up" style="animation-delay: 0.06s">
+        <p class="form-card__heading">{{ 'addEvent.sections.time' | translate }}</p>
+
+        <div class="time-grid">
+          <button type="button" class="time-picker-btn" (click)="openTimeModal('startTime')">
+            <span class="time-picker-btn__label">{{ 'addEvent.fields.startLabel' | translate }}</span>
+            <strong class="time-picker-btn__value">{{ form.controls.startTime.value }}</strong>
+          </button>
+
+          <div class="time-divider">
+            <ion-icon name="arrow-forward-outline"></ion-icon>
+          </div>
+
+          <button type="button" class="time-picker-btn" (click)="openTimeModal('endTime')">
+            <span class="time-picker-btn__label">{{ 'addEvent.fields.endLabel' | translate }}</span>
+            <strong class="time-picker-btn__value">{{ form.controls.endTime.value }}</strong>
+          </button>
+        </div>
+      </div>
+
+      <div class="form-card animate-fade-up" style="animation-delay: 0.10s">
+        <p class="form-card__heading">{{ 'addEvent.sections.extra' | translate }}</p>
+
+        <div class="form-stack">
+          <div class="field-group">
+            <label class="field-label" for="event-description">{{ 'addEvent.fields.descriptionLabel' | translate }}</label>
+            <ion-textarea
+              id="event-description"
+              [placeholder]="'addEvent.fields.descriptionPlaceholder' | translate"
+              formControlName="description"
+              fill="outline"
+              [autoGrow]="true"
+              [rows]="2"
+            ></ion-textarea>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">{{ 'addEvent.fields.colorLabel' | translate }}</label>
+            <div class="color-swatches">
+              <!-- Dynamic swatch for the linked course color (only shown when it differs from presets) -->
+              <button
+                *ngIf="selectedCourseColor && !colorOptions.includes(selectedCourseColor)"
+                type="button"
+                class="color-swatch"
+                [class.selected]="form.controls.color.value === selectedCourseColor"
+                [style.--swatch-color]="selectedCourseColor"
+                (click)="form.controls.color.setValue(selectedCourseColor)"
+              >
+                <ion-icon
+                  *ngIf="form.controls.color.value === selectedCourseColor"
+                  name="checkmark"
+                  class="swatch-check"
+                ></ion-icon>
+              </button>
+              <button
+                *ngFor="let color of colorOptions"
+                type="button"
+                class="color-swatch"
+                [class.selected]="form.controls.color.value === color"
+                [style.--swatch-color]="color"
+                (click)="form.controls.color.setValue(color)"
+                [attr.aria-label]="'addEvent.fields.colorLabel' | translate"
+              >
+                <ion-icon *ngIf="form.controls.color.value === color" name="checkmark" class="swatch-check"></ion-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="submit-area animate-fade-up" style="animation-delay: 0.14s">
+        <ion-button expand="block" type="submit">
+          <ion-icon slot="start" name="checkmark-outline"></ion-icon>
+          {{ 'addEvent.save' | translate }}
+        </ion-button>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- Start time modal -->
+  <ion-modal
+    [isOpen]="startTimeModalOpen"
+    (didDismiss)="closeTimeModal('startTime')"
+    cssClass="time-picker-modal"
+    [breakpoints]="[0, 1]"
+    [initialBreakpoint]="1"
+    [handle]="true"
+  >
+    <ng-template>
+      <ion-header class="ion-no-border">
+        <ion-toolbar>
+          <ion-title>{{ 'addEvent.timeModal.startTitle' | translate }}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button strong="true" (click)="confirmTimeSelection('startTime')">
+              {{ 'addEvent.timeModal.done' | translate }}
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="time-modal">
+        <ion-datetime
+          class="styled-datetime"
+          presentation="time"
+          hour-cycle="h23"
+          [value]="pendingStartIso"
+          (ionChange)="onStartTimeSelection($any($event.detail.value))"
+        ></ion-datetime>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <!-- End time modal -->
+  <ion-modal
+    [isOpen]="endTimeModalOpen"
+    (didDismiss)="closeTimeModal('endTime')"
+    cssClass="time-picker-modal"
+    [breakpoints]="[0, 1]"
+    [initialBreakpoint]="1"
+    [handle]="true"
+  >
+    <ng-template>
+      <ion-header class="ion-no-border">
+        <ion-toolbar>
+          <ion-title>{{ 'addEvent.timeModal.endTitle' | translate }}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button strong="true" (click)="confirmTimeSelection('endTime')">
+              {{ 'addEvent.timeModal.done' | translate }}
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="time-modal">
+        <ion-datetime
+          class="styled-datetime"
+          presentation="time"
+          hour-cycle="h23"
+          [value]="pendingEndIso"
+          (ionChange)="onEndTimeSelection($any($event.detail.value))"
+        ></ion-datetime>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>

@@ -1,0 +1,176 @@
+:host {
+  display: block;
+}
+
+.schedule-grid {
+  min-width: 660px;
+}
+
+// ─── Header row ──────────────────────────────────────────────────────────────
+.schedule-grid__header {
+  display: grid;
+  grid-template-columns: 48px repeat(7, minmax(82px, 1fr));
+  gap: 0.4rem;
+  margin-bottom: 0.6rem;
+}
+
+.schedule-grid__time-spacer {
+  min-height: 56px;
+}
+
+.schedule-grid__day-header {
+  min-height: 56px;
+  border-radius: var(--app-radius-lg);
+  background: var(--ion-card-background);
+  box-shadow: var(--app-shadow-sm);
+  border: 1px solid var(--app-border);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.6rem 0.75rem;
+}
+
+.schedule-grid__day-header span {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ion-text-color);
+}
+
+.schedule-grid__day-header small {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--app-text-tertiary);
+  margin-top: 0.1rem;
+}
+
+// ─── Body ────────────────────────────────────────────────────────────────────
+.schedule-grid__body {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 0.4rem;
+}
+
+// ─── Time column ─────────────────────────────────────────────────────────────
+.schedule-grid__time-column {
+  display: grid;
+  grid-template-rows: repeat(32, 44px);
+  gap: 0;
+}
+
+.schedule-grid__time-cell {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 0.2rem 0.5rem 0 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--app-text-tertiary);
+  letter-spacing: 0.01em;
+}
+
+// ─── Day columns ─────────────────────────────────────────────────────────────
+.schedule-grid__days {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(82px, 1fr));
+  gap: 0.4rem;
+}
+
+.schedule-grid__day-column {
+  display: grid;
+  grid-template-rows: repeat(32, 44px);
+  gap: 0;
+}
+
+// ─── Slots ───────────────────────────────────────────────────────────────────
+.schedule-grid__slot {
+  position: relative;
+  background: transparent;
+  border-bottom: 1px solid var(--app-border);
+  transition: background-color var(--app-transition);
+}
+
+.schedule-grid__slot app-event-card {
+  position: absolute;
+  inset: 2px;
+  z-index: 2;
+}
+
+// Individual slot hover target during drag
+.schedule-grid__slot.is-drag-target {
+  background: rgba(79, 70, 229, 0.1);
+  border-color: rgba(79, 70, 229, 0.4);
+  border-style: dashed;
+}
+
+// Column receiving highlight
+.schedule-grid__day-column.cdk-drop-list-receiving {
+  background: rgba(79, 70, 229, 0.025);
+  border-radius: var(--app-radius-lg);
+}
+
+// ─── Mobile day tabs (hidden on desktop) ─────────────────────────────────────
+.schedule-grid__day-tabs {
+  display: none;
+}
+
+// ─── Responsive ──────────────────────────────────────────────────────────────
+@media (max-width: 768px) {
+  .schedule-grid {
+    min-width: unset;
+  }
+
+  // Hide desktop column headers, show tab bar instead
+  .schedule-grid__header {
+    display: none;
+  }
+
+  .schedule-grid__day-tabs {
+    display: flex;
+    gap: 0.3rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .schedule-grid__day-tab {
+    flex: 1;
+    padding: 0.5rem 0.25rem;
+    border-radius: var(--app-radius-md);
+    border: 1.5px solid var(--app-border);
+    background: var(--app-surface-2);
+    font-family: inherit;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--app-text-secondary);
+    cursor: pointer;
+    text-align: center;
+    transition: background var(--app-transition), border-color var(--app-transition),
+      color var(--app-transition), box-shadow var(--app-transition);
+
+    &.active {
+      background: var(--ion-color-primary);
+      border-color: var(--ion-color-primary);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(79, 70, 229, 0.35);
+    }
+  }
+
+  .schedule-grid__body {
+    gap: 0.4rem;
+    grid-template-columns: 48px 1fr;
+  }
+
+  // Single visible column
+  .schedule-grid__days {
+    grid-template-columns: 1fr;
+  }
+
+  .schedule-grid__day-column {
+    display: none;
+
+    &.is-active {
+      display: grid;
+    }
+  }
+}

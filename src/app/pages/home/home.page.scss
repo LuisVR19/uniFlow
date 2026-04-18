@@ -1,0 +1,332 @@
+:host {
+  --page-padding: var(--app-page-padding);
+}
+
+.home-page {
+  min-height: 100%;
+  padding: calc(env(safe-area-inset-top) + 1rem) var(--page-padding) 3rem;
+  background: var(--ion-background-color);
+}
+
+// ─── Section header ──────────────────────────────────────────────────────────
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.9rem;
+}
+
+.section-header__eyebrow {
+  margin: 0 0 0.2rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--app-text-tertiary);
+}
+
+.section-header__title {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--ion-text-color);
+}
+
+.see-all-btn {
+  --color: var(--ion-color-primary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+// ─── Academics section ───────────────────────────────────────────────────────
+.today-section {
+  margin-bottom: 2.5rem;
+}
+
+.academics-section {
+  margin-bottom: 1.5rem;
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: var(--app-radius-xl, 14px);
+  background: var(--ion-card-background);
+  border: 1px solid var(--app-border, rgba(0,0,0,0.06));
+  box-shadow: var(--app-shadow-sm, 0 1px 6px rgba(0,0,0,0.05));
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+
+  &:active {
+    transform: scale(0.985);
+    box-shadow: none;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    flex-shrink: 0;
+
+    ion-icon {
+      font-size: 1.2rem;
+      color: #fff;
+    }
+
+    &--violet  { background: #6366f1; }
+    &--indigo  { background: var(--ion-color-primary, #4f46e5); }
+    &--emerald { background: #10b981; }
+    &--amber   { background: #F59E0B; }
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__title {
+    display: block;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--ion-text-color);
+    margin-bottom: 0.15rem;
+  }
+
+  &__sub {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--app-text-secondary, var(--ion-color-medium));
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__arrow {
+    font-size: 1rem;
+    color: var(--app-text-tertiary, var(--ion-color-medium));
+    flex-shrink: 0;
+  }
+}
+
+// ─── Upcoming tasks section ──────────────────────────────────────────────────
+.upcoming-section {
+  margin-bottom: 1.5rem;
+}
+
+.upcoming-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.upcoming-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--app-radius-xl);
+  background: var(--ion-card-background);
+  border: 1px solid var(--app-border);
+  box-shadow: var(--app-shadow-sm);
+  cursor: pointer;
+  transition: transform 0.13s ease, box-shadow 0.13s ease;
+
+  &:active {
+    transform: scale(0.985);
+    box-shadow: none;
+  }
+
+  &__bar {
+    width: 4px;
+    align-self: stretch;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__name {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--ion-text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__course {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--app-text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.2rem;
+    flex-shrink: 0;
+  }
+
+  &__due {
+    font-size: 0.72rem;
+    font-weight: 700;
+    border-radius: 999px;
+    padding: 2px 8px;
+
+    &--today {
+      background: rgba(239, 68, 68, 0.12);
+      color: #dc2626;
+    }
+
+    &--tomorrow {
+      background: rgba(245, 158, 11, 0.12);
+      color: #d97706;
+    }
+
+    &--normal {
+      background: var(--app-surface-2);
+      color: var(--app-text-secondary);
+    }
+  }
+
+  &__weight {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--app-text-tertiary);
+  }
+}
+
+// ─── Today list ──────────────────────────────────────────────────────────────
+.today-list {
+  display: grid;
+  gap: 0.6rem;
+}
+
+// ─── Empty state ─────────────────────────────────────────────────────────────
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2.25rem 1.5rem;
+  border-radius: var(--app-radius-xl);
+  background: var(--ion-card-background);
+  border: 1.5px dashed var(--app-border-strong);
+  text-align: center;
+}
+
+.empty-state__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--app-surface-2);
+  margin-bottom: 1rem;
+
+  ion-icon {
+    font-size: 1.5rem;
+    color: var(--app-text-tertiary);
+  }
+}
+
+.empty-state__title {
+  margin: 0 0 0.3rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ion-text-color);
+}
+
+.empty-state__sub {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--app-text-secondary);
+  line-height: 1.5;
+}
+
+// ─── Toolbar avatar ──────────────────────────────────────────────────────────
+.toolbar-avatar {
+  width: 28px;
+  min-width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  background: var(--ion-color-primary);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.02em;
+}
+
+// ─── Language toggle ─────────────────────────────────────────────────────────
+.lang-toggle {
+  --color: var(--ion-color-primary);
+  --padding-start: 0.5rem;
+  --padding-end: 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  min-width: 36px;
+  transition: opacity var(--app-transition);
+
+  &:active {
+    opacity: 0.6;
+  }
+}
+
+// ─── Theme toggle ────────────────────────────────────────────────────────────
+.theme-toggle {
+  ion-icon {
+    font-size: 1.2rem;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+                opacity 0.2s ease;
+  }
+
+  &:active ion-icon {
+    transform: rotate(30deg) scale(0.88);
+  }
+}
+
+// ─── Responsive ──────────────────────────────────────────────────────────────
+@media (min-width: 768px) {
+  :host {
+    --page-padding: 2rem;
+  }
+
+  .home-page {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .hero__title {
+    font-size: 2.25rem;
+  }
+}

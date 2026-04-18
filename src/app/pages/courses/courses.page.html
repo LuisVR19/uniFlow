@@ -1,0 +1,90 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/semesters"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ semester?.name ?? 'Courses' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="loadCourses(semesterId)">
+        <ion-icon slot="icon-only" name="refresh-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="courses-page">
+
+    <div class="semester-meta" *ngIf="semester">
+      <span class="semester-meta__year">{{ semester.year }}</span>
+      <span
+        class="semester-meta__badge"
+        [class.semester-meta__badge--active]="semester.is_active"
+      >
+        {{ (semester.is_active ? 'common.status.active' : 'common.status.inactive') | translate }}
+      </span>
+    </div>
+
+    <div class="loading-state" *ngIf="loading">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+
+    <div class="empty-state" *ngIf="!loading && courses.length === 0">
+      <div class="empty-state__icon">
+        <ion-icon name="book-outline"></ion-icon>
+      </div>
+      <h2 class="empty-state__title">{{ 'courses.empty.title' | translate }}</h2>
+      <p class="empty-state__sub">{{ 'courses.empty.sub' | translate }}</p>
+    </div>
+
+    <div class="course-list" *ngIf="!loading && courses.length > 0">
+      <div class="course-card" *ngFor="let course of courses">
+
+        <div
+          class="course-card__color-bar"
+          [style.background]="course.color"
+          (click)="toggleColorPicker(course.id, $event)"
+        ></div>
+
+        <div class="course-card__body">
+          <div class="course-card__header">
+            <div class="course-card__info" (click)="navigateToDetail(course)">
+              <h3 class="course-card__name">{{ course.name }}</h3>
+              <div class="course-card__meta">
+                <span class="course-card__chip" *ngIf="course.code">{{ course.code }}</span>
+                <span class="course-card__chip" *ngIf="course.credits">{{ course.credits }} cr.</span>
+              </div>
+            </div>
+            <div class="course-card__actions">
+              <ion-button fill="clear" size="small" (click)="openEditDialog(course, $event)">
+                <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+              </ion-button>
+              <ion-button fill="clear" size="small" color="danger" (click)="confirmDelete(course, $event)">
+                <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+              </ion-button>
+              <ion-icon name="chevron-forward-outline" class="course-card__nav-arrow" (click)="navigateToDetail(course)"></ion-icon>
+            </div>
+          </div>
+
+          <div class="course-card__colors" *ngIf="colorPickerOpenId === course.id">
+            <button
+              class="course-card__color-dot"
+              *ngFor="let color of presetColors"
+              [style.background]="color"
+              [class.course-card__color-dot--selected]="course.color === color"
+              (click)="pickColor(course, color)"
+            ></button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="openCreateDialog()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

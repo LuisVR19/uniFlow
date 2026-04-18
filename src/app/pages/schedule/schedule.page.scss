@@ -1,0 +1,106 @@
+.schedule-page {
+  min-height: 100%;
+  padding: calc(env(safe-area-inset-top) + 0.75rem) 1rem 2rem;
+  background: var(--ion-background-color);
+}
+
+// ─── Hint bar ────────────────────────────────────────────────────────────────
+.schedule-page__hint {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: var(--app-radius-lg);
+  background: var(--ion-card-background);
+  border: 1px solid var(--app-border);
+  box-shadow: var(--app-shadow-sm);
+}
+
+.hint-icon {
+  flex-shrink: 0;
+  font-size: 1rem;
+  color: var(--ion-color-primary);
+  opacity: 0.8;
+}
+
+.schedule-page__hint p {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--app-text-secondary);
+}
+
+// ─── Rotate hint (mobile portrait only) ──────────────────────────────────────
+.schedule-page__rotate-hint {
+  display: none;
+}
+
+@media (max-width: 768px) and (orientation: portrait) {
+  .schedule-page__rotate-hint {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.65rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: var(--app-radius-lg);
+    background: rgba(79, 70, 229, 0.07);
+    border: 1px solid rgba(79, 70, 229, 0.2);
+  }
+}
+
+.rotate-hint__icon {
+  flex-shrink: 0;
+  font-size: 1.3rem;
+  color: var(--ion-color-primary);
+}
+
+.schedule-page__rotate-hint p {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--ion-color-primary);
+  font-weight: 500;
+}
+
+// ─── Toolbar buttons ─────────────────────────────────────────────────────────
+.clear-btn {
+  --color: var(--ion-color-danger);
+
+  ion-icon {
+    font-size: 1.15rem;
+    transition: transform var(--app-transition);
+  }
+
+  &:active ion-icon {
+    transform: scale(0.88);
+  }
+}
+
+// ─── Export button ───────────────────────────────────────────────────────────
+.export-btn {
+  --color: var(--ion-color-primary);
+
+  ion-icon {
+    font-size: 1.15rem;
+    transition: transform var(--app-transition);
+  }
+
+  &:active ion-icon {
+    transform: scale(0.88);
+  }
+}
+
+// ─── Grid shell ──────────────────────────────────────────────────────────────
+.schedule-page__grid-shell {
+  overflow-x: auto;
+  padding-bottom: 1.5rem;
+  // Smooth scrollbar on mobile webkit
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 768px) {
+  .schedule-page {
+    padding-inline: 1.5rem;
+  }
+}

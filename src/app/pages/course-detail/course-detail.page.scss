@@ -1,0 +1,315 @@
+.detail-page {
+  padding: 16px;
+  padding-bottom: 88px;
+
+  @media (min-width: 768px) {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .course-meta {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+
+    &__left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    &__color-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    &__chip {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--app-surface-2);
+      color: var(--app-text-secondary);
+    }
+  }
+
+  // ── Grade summary card ────────────────────────────────────────────────────
+
+  .grade-card {
+    background: var(--ion-card-background, var(--ion-item-background));
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 24px;
+    box-shadow: var(--app-shadow-md);
+
+    &__top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    &__label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ion-color-medium);
+    }
+
+    &__score {
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1;
+
+      small {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--ion-color-medium);
+      }
+
+      &--success { color: var(--ion-color-success); }
+      &--warning { color: var(--ion-color-warning-shade); }
+      &--danger  { color: var(--ion-color-danger); }
+    }
+
+    &__bar {
+      --background: var(--app-surface-2);
+      height: 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+
+    &__row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--ion-color-medium);
+      margin-bottom: 10px;
+    }
+
+    &__warn {
+      color: var(--ion-color-warning-shade);
+      font-weight: 600;
+    }
+
+    &__status {
+      padding-top: 10px;
+      border-top: 1px solid var(--app-border);
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      &--pass {
+        color: var(--ion-color-success-shade);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        ion-icon { font-size: 16px; }
+      }
+
+      &--fail {
+        color: var(--ion-color-danger-shade);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        ion-icon { font-size: 16px; }
+      }
+
+      &--warn {
+        color: var(--ion-color-warning-shade);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        ion-icon { font-size: 16px; }
+      }
+    }
+
+    &__empty {
+      font-size: 13px;
+      color: var(--ion-color-medium);
+      font-style: italic;
+    }
+  }
+
+  // ── States ────────────────────────────────────────────────────────────────
+
+  .loading-state {
+    display: flex;
+    justify-content: center;
+    padding: 60px 0;
+  }
+
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 50px 24px;
+
+    &__icon ion-icon {
+      font-size: 52px;
+      color: var(--ion-color-medium);
+    }
+
+    &__title {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 12px 0 6px;
+      color: var(--ion-text-color);
+    }
+
+    &__sub {
+      font-size: 14px;
+      color: var(--ion-color-medium);
+      margin: 0;
+    }
+  }
+
+  // ── Evaluations list ─────────────────────────────────────────────────────
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ion-color-medium);
+    margin: 0 0 12px;
+  }
+
+  .eval-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .eval-card {
+    background: var(--ion-card-background, var(--ion-item-background));
+    border-radius: 16px;
+    padding: 14px 16px;
+    box-shadow: var(--app-shadow-sm);
+
+    &__header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    &__title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    &__name {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ion-text-color);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &__weight {
+      flex-shrink: 0;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--app-chip-primary-bg);
+      color: var(--app-chip-primary-color);
+    }
+
+    &__actions {
+      display: flex;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+
+    &__due {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      color: var(--app-text-secondary);
+      margin-bottom: 8px;
+
+      ion-icon { font-size: 13px; flex-shrink: 0; }
+    }
+
+    &__score-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    &__input {
+      flex: 0 0 90px;
+      --padding-start: 10px;
+      --padding-end: 10px;
+      --border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      min-height: 36px;
+      max-width: 90px;
+    }
+
+    &__max {
+      font-size: 14px;
+      color: var(--ion-color-medium);
+      white-space: nowrap;
+    }
+
+    &__result {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--ion-color-success-shade);
+      font-weight: 500;
+
+      ion-icon { font-size: 15px; flex-shrink: 0; }
+    }
+
+    &__pending {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--ion-color-medium);
+
+      ion-icon { font-size: 15px; flex-shrink: 0; }
+    }
+
+    &__min-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px solid var(--app-border);
+
+      ion-icon { font-size: 15px; flex-shrink: 0; }
+    }
+
+    &__min-label {
+      color: var(--ion-color-medium);
+    }
+
+    &__min-value {
+      &--success { color: var(--ion-color-success-shade); }
+      &--warning { color: var(--ion-color-warning-shade); }
+      &--danger  { color: var(--ion-color-danger); }
+    }
+  }
+}

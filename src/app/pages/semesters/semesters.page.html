@@ -1,0 +1,81 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'semesters.title' | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="loadSemesters()">
+        <ion-icon slot="icon-only" name="refresh-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="semesters-page">
+
+    <div class="loading-state" *ngIf="loading">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+
+    <div class="empty-state" *ngIf="!loading && semesters.length === 0">
+      <div class="empty-state__icon">
+        <ion-icon name="school-outline"></ion-icon>
+      </div>
+      <h2 class="empty-state__title">{{ 'semesters.empty.title' | translate }}</h2>
+      <p class="empty-state__sub">{{ 'semesters.empty.sub' | translate }}</p>
+    </div>
+
+    <div class="semester-list" *ngIf="!loading && semesters.length > 0">
+      <div
+        class="semester-card"
+        *ngFor="let semester of semesters"
+        (click)="navigateToCourses(semester)"
+      >
+        <div class="semester-card__header">
+          <div class="semester-card__info">
+            <span class="semester-card__year">{{ semester.year }}</span>
+            <h3 class="semester-card__name">{{ semester.name }}</h3>
+          </div>
+          <span
+            class="semester-card__badge"
+            [class.semester-card__badge--active]="semester.is_active"
+          >
+            {{ (semester.is_active ? 'common.status.active' : 'common.status.inactive') | translate }}
+          </span>
+        </div>
+
+        <div class="semester-card__footer">
+          <div class="semester-card__actions">
+            <ion-button
+              fill="clear"
+              size="small"
+              [color]="semester.is_active ? 'success' : 'medium'"
+              (click)="toggleActive(semester, $event)"
+            >
+              <ion-icon
+                slot="icon-only"
+                [name]="semester.is_active ? 'radio-button-on' : 'radio-button-off-outline'"
+              ></ion-icon>
+            </ion-button>
+            <ion-button fill="clear" size="small" (click)="openEditDialog(semester, $event)">
+              <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+            </ion-button>
+            <ion-button fill="clear" size="small" color="danger" (click)="confirmDelete(semester, $event)">
+              <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+            </ion-button>
+          </div>
+          <ion-icon name="chevron-forward-outline" class="semester-card__arrow"></ion-icon>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="openCreateDialog()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

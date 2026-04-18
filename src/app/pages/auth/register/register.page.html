@@ -1,0 +1,104 @@
+<ion-content [fullscreen]="true" class="auth-content">
+  <div class="auth-page animate-fade-up">
+
+    <div class="auth-settings">
+      <ion-button fill="clear" class="auth-settings__lang" (click)="languageService.toggle()">
+        {{ (languageService.lang$ | async) === 'en' ? 'ES' : 'EN' }}
+      </ion-button>
+      <ion-button fill="clear" class="auth-settings__theme" (click)="themeService.toggle()">
+        <ion-icon slot="icon-only" [name]="(themeService.isDark$ | async) ? 'sunny-outline' : 'moon-outline'"></ion-icon>
+      </ion-button>
+    </div>
+
+    <div class="auth-header">
+      <div class="auth-logo-wrap">
+        <ion-icon name="school-outline"></ion-icon>
+      </div>
+      <h1>UniFlow</h1>
+      <p>{{ 'auth.register.subtitle' | translate }}</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-form">
+
+      <ion-card class="auth-card">
+        <ion-card-content>
+
+          <div class="field-wrap">
+            <ion-input
+              formControlName="email"
+              type="email"
+              [label]="'auth.email' | translate"
+              labelPlacement="floating"
+              fill="outline"
+              inputmode="email"
+              autocomplete="email"
+              autocapitalize="none"
+            ></ion-input>
+            <p class="field-error" *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
+              {{ 'auth.errors.emailRequired' | translate }}
+            </p>
+          </div>
+
+          <div class="field-wrap">
+            <ion-input
+              formControlName="password"
+              [type]="showPassword ? 'text' : 'password'"
+              [label]="'auth.password' | translate"
+              labelPlacement="floating"
+              fill="outline"
+              autocomplete="new-password"
+            >
+              <ion-button slot="end" fill="clear" size="small" (click)="showPassword = !showPassword" type="button">
+                <ion-icon slot="icon-only" [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+              </ion-button>
+            </ion-input>
+            <p class="field-error" *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
+              {{ 'auth.errors.passwordRequired' | translate }}
+            </p>
+          </div>
+
+          <div class="field-wrap">
+            <ion-input
+              formControlName="confirmPassword"
+              [type]="showConfirm ? 'text' : 'password'"
+              [label]="'auth.confirmPassword' | translate"
+              labelPlacement="floating"
+              fill="outline"
+              autocomplete="new-password"
+            >
+              <ion-button slot="end" fill="clear" size="small" (click)="showConfirm = !showConfirm" type="button">
+                <ion-icon slot="icon-only" [name]="showConfirm ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+              </ion-button>
+            </ion-input>
+            <p class="field-error" *ngIf="form.errors?.['passwordsMismatch'] && form.get('confirmPassword')?.touched">
+              {{ 'auth.errors.passwordsMismatch' | translate }}
+            </p>
+          </div>
+
+        </ion-card-content>
+      </ion-card>
+
+      <div class="auth-error animate-scale-in" *ngIf="errorMessage">
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        <span>{{ errorMessage }}</span>
+      </div>
+
+      <div class="auth-success animate-scale-in" *ngIf="successMessage">
+        <ion-icon name="checkmark-circle-outline"></ion-icon>
+        <span>{{ successMessage }}</span>
+      </div>
+
+      <ion-button expand="block" type="submit" [disabled]="loading" class="submit-btn">
+        <ion-spinner *ngIf="loading" name="crescent" slot="start"></ion-spinner>
+        <span *ngIf="!loading">{{ 'auth.register.submit' | translate }}</span>
+        <span *ngIf="loading">{{ 'auth.loading' | translate }}</span>
+      </ion-button>
+
+      <p class="auth-link">
+        {{ 'auth.register.hasAccount' | translate }}
+        <a routerLink="/auth/login">{{ 'auth.register.login' | translate }}</a>
+      </p>
+
+    </form>
+  </div>
+</ion-content>

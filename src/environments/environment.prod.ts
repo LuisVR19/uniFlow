@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  supabaseUrl: 'PEGAR_AQUI_URL',
+  supabaseAnonKey: 'PEGAR_AQUI_KEY',
 };

@@ -1,0 +1,84 @@
+<ion-header [translucent]="true" *ngIf="!isSetup">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'profile.title' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="profile-page" [class.profile-page--setup]="isSetup">
+
+    <!-- Setup mode header -->
+    <div class="setup-hero" *ngIf="isSetup">
+      <h1 class="setup-hero__title">{{ 'profile.setup.title' | translate }}</h1>
+      <p class="setup-hero__sub">{{ 'profile.setup.sub' | translate }}</p>
+    </div>
+
+    <!-- Avatar -->
+    <div class="avatar-wrap">
+      <div class="avatar" [class.avatar--placeholder]="!fullName">
+        <span *ngIf="fullName">{{ initials }}</span>
+        <ion-icon *ngIf="!fullName" name="person-outline"></ion-icon>
+      </div>
+      <p class="avatar__name" *ngIf="fullName && !isSetup">{{ fullName }}</p>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading-state" *ngIf="loading">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+
+    <!-- Form -->
+    <div class="form-section" *ngIf="!loading">
+
+      <div class="field">
+        <ion-label class="field__label">
+          {{ 'profile.fields.fullName' | translate }} <span class="field__required">*</span>
+        </ion-label>
+        <ion-input
+          [(ngModel)]="fullName"
+          type="text"
+          [placeholder]="'profile.fields.fullNamePlaceholder' | translate"
+          fill="outline"
+          class="field__input"
+        ></ion-input>
+      </div>
+
+      <div class="field">
+        <ion-label class="field__label">{{ 'profile.fields.university' | translate }}</ion-label>
+        <ion-input
+          [(ngModel)]="university"
+          type="text"
+          [placeholder]="'profile.fields.universityPlaceholder' | translate"
+          fill="outline"
+          class="field__input"
+        ></ion-input>
+      </div>
+
+      <div class="field">
+        <ion-label class="field__label">{{ 'profile.fields.career' | translate }}</ion-label>
+        <ion-input
+          [(ngModel)]="career"
+          type="text"
+          [placeholder]="'profile.fields.careerPlaceholder' | translate"
+          fill="outline"
+          class="field__input"
+        ></ion-input>
+      </div>
+
+      <ion-button
+        expand="block"
+        class="save-btn"
+        (click)="save()"
+        [disabled]="!fullName.trim()"
+      >
+        {{ (isSetup ? 'profile.btn.getStarted' : 'profile.btn.saveChanges') | translate }}
+        <ion-icon slot="end" [name]="isSetup ? 'arrow-forward-outline' : 'checkmark-outline'"></ion-icon>
+      </ion-button>
+
+    </div>
+
+  </div>
+</ion-content>

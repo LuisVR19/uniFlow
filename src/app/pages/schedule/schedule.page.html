@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'schedule.title' | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirmClearSchedule()" class="clear-btn" [attr.aria-label]="'schedule.clear.button' | translate">
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+      </ion-button>
+      <ion-button (click)="openExportSheet()" class="export-btn" [attr.aria-label]="'schedule.export.button' | translate">
+        <ion-icon slot="icon-only" name="share-outline"></ion-icon>
+      </ion-button>
+      <ion-button routerLink="/add-event">
+        <ion-icon slot="start" name="add-outline"></ion-icon>
+        {{ 'schedule.add' | translate }}
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="schedule-page">
+
+    <div class="schedule-page__hint animate-fade-up">
+      <ion-icon name="information-circle-outline" class="hint-icon"></ion-icon>
+      <p>{{ 'schedule.hint' | translate }}</p>
+    </div>
+
+    <div class="schedule-page__rotate-hint animate-fade-up">
+      <ion-icon name="phone-landscape-outline" class="rotate-hint__icon"></ion-icon>
+      <p>{{ 'schedule.rotateHint' | translate }}</p>
+    </div>
+
+    <section class="schedule-page__grid-shell animate-fade-up" style="animation-delay: 0.05s" #gridShell>
+      <app-schedule-grid></app-schedule-grid>
+    </section>
+
+  </div>
+</ion-content>

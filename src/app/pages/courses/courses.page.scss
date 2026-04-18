@@ -1,0 +1,185 @@
+.courses-page {
+  padding: 16px;
+  min-height: 100%;
+
+  @media (min-width: 768px) {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .semester-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+
+    &__year {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ion-color-medium);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    &__badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--app-surface-2);
+      color: var(--app-text-secondary);
+
+      &--active {
+        background: rgba(var(--ion-color-success-rgb), 0.15);
+        color: var(--ion-color-success-shade);
+      }
+    }
+  }
+
+  .loading-state {
+    display: flex;
+    justify-content: center;
+    padding-top: 80px;
+  }
+
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px;
+    text-align: center;
+
+    &__icon {
+      margin-bottom: 16px;
+      ion-icon {
+        font-size: 64px;
+        color: var(--ion-color-medium);
+      }
+    }
+
+    &__title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--ion-text-color);
+      margin: 0 0 8px;
+    }
+
+    &__sub {
+      font-size: 14px;
+      color: var(--ion-color-medium);
+      margin: 0;
+    }
+  }
+
+  .course-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 88px;
+  }
+
+  .course-card {
+    background: var(--ion-card-background, var(--ion-item-background));
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--app-shadow-sm);
+
+    &__color-bar {
+      height: 8px;
+      cursor: pointer;
+      transition: height 0.15s ease;
+
+      &:hover {
+        height: 12px;
+      }
+    }
+
+    &__body {
+      padding: 14px 16px;
+    }
+
+    &__header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    &__info {
+      flex: 1;
+      min-width: 0;
+      cursor: pointer;
+    }
+
+    &__name {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--ion-text-color);
+      margin: 0 0 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &__meta {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    &__chip {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--app-surface-2);
+      color: var(--app-text-secondary);
+    }
+
+    &__actions {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      margin-left: 8px;
+      flex-shrink: 0;
+    }
+
+    &__nav-arrow {
+      font-size: 18px;
+      color: var(--ion-color-medium);
+      cursor: pointer;
+    }
+
+    &__colors {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding-top: 12px;
+      animation: fadeIn 0.15s ease;
+    }
+
+    &__color-dot {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      cursor: pointer;
+      padding: 0;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+
+      &:hover {
+        transform: scale(1.15);
+      }
+
+      &--selected {
+        border-color: var(--ion-text-color);
+        transform: scale(1.2);
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

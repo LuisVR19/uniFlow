@@ -1,0 +1,183 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="'/courses/' + (course?.semester_id ?? '')"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ course?.name ?? 'Course Detail' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="detail-page">
+
+    <!-- Course color + meta chips -->
+    <div class="course-meta" *ngIf="course">
+      <div class="course-meta__left">
+        <div class="course-meta__color-dot" [style.background]="course.color"></div>
+        <span class="course-meta__chip" *ngIf="course.code">{{ course.code }}</span>
+        <span class="course-meta__chip" *ngIf="course.credits">{{ course.credits }} cr.</span>
+      </div>
+    </div>
+
+    <!-- Grade summary card -->
+    <div class="grade-card" *ngIf="!loading">
+      <div class="grade-card__top">
+        <span class="grade-card__label">{{ 'courseDetail.gradeCard.label' | translate }}</span>
+        <span
+          class="grade-card__score"
+          [class.grade-card__score--success]="stats.progressColor === 'success'"
+          [class.grade-card__score--warning]="stats.progressColor === 'warning'"
+          [class.grade-card__score--danger]="stats.progressColor === 'danger'"
+        >
+          {{ stats.currentGrade | number:'1.1-1' }}<small>/100</small>
+        </span>
+      </div>
+
+      <ion-progress-bar
+        *ngIf="stats.hasEvaluations"
+        [value]="stats.progressValue"
+        [color]="stats.progressColor"
+        class="grade-card__bar"
+      ></ion-progress-bar>
+
+      <div class="grade-card__row" *ngIf="stats.hasEvaluations">
+        <span class="grade-card__sub">
+          {{ 'courseDetail.gradeCard.maxAchievable' | translate:{ value: (stats.maxAchievable | number:'1.1-1') } }}
+        </span>
+        <span
+          class="grade-card__warn"
+          *ngIf="stats.totalPct !== 100"
+        >
+          {{ 'courseDetail.gradeCard.totalPct' | translate:{ pct: (stats.totalPct | number:'1.0-0') } }}
+        </span>
+      </div>
+
+      <div class="grade-card__status" *ngIf="stats.hasEvaluations">
+        <span *ngIf="stats.isPassing" class="grade-card__status--pass">
+          <ion-icon name="checkmark-circle-outline"></ion-icon>
+          {{ 'courseDetail.gradeCard.passing' | translate }}
+        </span>
+        <span *ngIf="!stats.isPassing && !stats.canStillPass" class="grade-card__status--fail">
+          <ion-icon name="close-circle-outline"></ion-icon>
+          {{ 'courseDetail.gradeCard.failed' | translate }}
+        </span>
+        <span
+          *ngIf="!stats.isPassing && stats.canStillPass && stats.requiredAvgPercent !== null"
+          class="grade-card__status--warn"
+        >
+          <ion-icon name="alert-circle-outline"></ion-icon>
+          {{ 'courseDetail.gradeCard.needAvg' | translate:{ pct: (stats.requiredAvgPercent | number:'1.1-1') } }}
+        </span>
+      </div>
+
+      <div class="grade-card__empty" *ngIf="!stats.hasEvaluations">
+        {{ 'courseDetail.gradeCard.empty' | translate }}
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading-state" *ngIf="loading">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+
+    <!-- Empty evaluations -->
+    <div class="empty-state" *ngIf="!loading && items.length === 0">
+      <div class="empty-state__icon">
+        <ion-icon name="clipboard-outline"></ion-icon>
+      </div>
+      <h2 class="empty-state__title">{{ 'courseDetail.empty.title' | translate }}</h2>
+      <p class="empty-state__sub">{{ 'courseDetail.empty.sub' | translate }}</p>
+    </div>
+
+    <!-- Evaluations list -->
+    <div class="eval-list" *ngIf="!loading && items.length > 0">
+      <p class="section-label">{{ 'courseDetail.sectionLabel' | translate }}</p>
+
+      <div class="eval-card" *ngFor="let item of items">
+
+        <!-- Header: name + weight + actions -->
+        <div class="eval-card__header">
+          <div class="eval-card__title-wrap">
+            <span class="eval-card__name">{{ item.evaluation.name }}</span>
+            <span class="eval-card__weight">{{ item.evaluation.percentage }}%</span>
+          </div>
+          <div class="eval-card__actions">
+            <ion-button fill="clear" size="small" (click)="openEditEvalDialog(item, $event)">
+              <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+            </ion-button>
+            <ion-button fill="clear" size="small" color="danger" (click)="confirmDeleteEval(item, $event)">
+              <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+
+        <!-- Due date -->
+        <div class="eval-card__due" *ngIf="item.evaluation.due_date">
+          <ion-icon name="calendar-outline" color="medium"></ion-icon>
+          <span>{{ formatDate(item.evaluation.due_date) }}</span>
+        </div>
+
+        <!-- Score input row -->
+        <div class="eval-card__score-row">
+          <ion-input
+            type="number"
+            [(ngModel)]="item.scoreInput"
+            [min]="0"
+            [max]="item.evaluation.max_score"
+            placeholder="Score"
+            class="eval-card__input"
+            fill="outline"
+          ></ion-input>
+          <span class="eval-card__max">/ 100</span>
+          <ion-button
+            size="small"
+            (click)="saveGrade(item)"
+            [disabled]="item.saving || !item.scoreInput"
+          >
+            <ion-icon slot="icon-only" name="checkmark-outline"></ion-icon>
+          </ion-button>
+          <ion-button
+            size="small"
+            fill="clear"
+            color="medium"
+            *ngIf="item.grade"
+            (click)="clearGrade(item, $event)"
+          >
+            <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+          </ion-button>
+        </div>
+
+        <!-- Result row -->
+        <div class="eval-card__result" *ngIf="item.grade">
+          <ion-icon name="stats-chart-outline" color="success"></ion-icon>
+          <span>
+            {{ getContribution(item) | number:'1.2-2' }} / {{ item.evaluation.percentage }} pts
+            &nbsp;&bull;&nbsp;
+            {{ getScorePercent(item) | number:'1.1-1' }}%
+          </span>
+        </div>
+        <div class="eval-card__pending" *ngIf="!item.grade">
+          <ion-icon name="time-outline" color="medium"></ion-icon>
+          <span>{{ 'courseDetail.eval.pending' | translate }}</span>
+        </div>
+        <div class="eval-card__min-bar" *ngIf="!item.grade && getMinRequired(item) !== null">
+          <ion-icon name="flag-outline" [color]="getMinRequiredColor(item)"></ion-icon>
+          <span class="eval-card__min-label">
+            {{ 'courseDetail.eval.minRequired' | translate }}
+            <strong [class]="'eval-card__min-value--' + getMinRequiredColor(item)">
+              {{ getMinRequired(item) | number:'1.1-1' }} / {{ item.evaluation.max_score }}
+            </strong>
+          </span>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="openCreateEvalDialog()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

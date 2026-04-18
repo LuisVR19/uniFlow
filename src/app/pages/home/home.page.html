@@ -1,0 +1,156 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>UniFlow</ion-title>
+    <ion-buttons slot="end">
+      <ion-button
+        fill="clear"
+        class="lang-toggle"
+        (click)="languageService.toggle()"
+        [attr.aria-label]="(languageService.lang$ | async) === 'en' ? 'Cambiar a español' : 'Switch to English'"
+      >
+        {{ (languageService.lang$ | async) === 'en' ? 'ES' : 'EN' }}
+      </ion-button>
+      <ion-button
+        fill="clear"
+        class="theme-toggle"
+        (click)="themeService.toggle()"
+        [attr.aria-label]="(themeService.isDark$ | async) ? 'Switch to light mode' : 'Switch to dark mode'"
+      >
+        <ion-icon
+          slot="icon-only"
+          [name]="(themeService.isDark$ | async) ? 'sunny-outline' : 'moon-outline'"
+        ></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" (click)="goToProfile()" [attr.aria-label]="'profile.title' | translate">
+        <div class="toolbar-avatar" slot="icon-only">{{ initials }}</div>
+      </ion-button>
+      <ion-button fill="clear" (click)="logout()" [attr.aria-label]="'auth.logout' | translate">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="home-page">
+
+    <!-- 1. Evaluaciones próximas — lo más urgente -->
+    <section class="upcoming-section animate-fade-up">
+      <div class="section-header">
+        <div>
+          <p class="section-header__eyebrow">{{ 'home.upcoming.eyebrow' | translate }}</p>
+          <h2 class="section-header__title">{{ 'home.upcoming.title' | translate }}</h2>
+        </div>
+        <ion-button fill="clear" size="small" routerLink="/tasks" class="see-all-btn">
+          {{ 'home.upcoming.seeAll' | translate }}
+          <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+        </ion-button>
+      </div>
+
+      <div class="empty-state animate-scale-in" *ngIf="upcomingTasks.length === 0">
+        <div class="empty-state__icon">
+          <ion-icon name="checkmark-done-outline"></ion-icon>
+        </div>
+        <p class="empty-state__title">{{ 'home.upcoming.empty.title' | translate }}</p>
+        <p class="empty-state__sub">{{ 'home.upcoming.empty.sub' | translate }}</p>
+      </div>
+
+      <div class="upcoming-list" *ngIf="upcomingTasks.length > 0">
+        <div
+          class="upcoming-card"
+          *ngFor="let task of upcomingTasks"
+          (click)="router.navigate(['/course-detail', task.evaluation.course.id])"
+        >
+          <div class="upcoming-card__bar" [style.background]="task.evaluation.course.color"></div>
+          <div class="upcoming-card__content">
+            <span class="upcoming-card__name">{{ task.evaluation.name }}</span>
+            <span class="upcoming-card__course">{{ task.evaluation.course.name }}</span>
+          </div>
+          <div class="upcoming-card__right">
+            <span class="upcoming-card__due upcoming-card__due--{{ dueDateClass(task.daysLeft) }}">
+              {{ dueDateLabel(task) }}
+            </span>
+            <span class="upcoming-card__weight">{{ task.evaluation.percentage }}%</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Horario de hoy -->
+    <section class="today-section animate-fade-up" style="animation-delay: 0.06s">
+      <div class="section-header">
+        <div>
+          <p class="section-header__eyebrow">{{ 'home.today.label' | translate }}</p>
+          <h2 class="section-header__title">{{ todayLabel }}</h2>
+        </div>
+        <ion-button fill="clear" size="small" routerLink="/schedule" class="see-all-btn">
+          {{ 'home.today.seeAll' | translate }}
+          <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+        </ion-button>
+      </div>
+
+      <div class="empty-state animate-scale-in" *ngIf="todayEvents.length === 0">
+        <div class="empty-state__icon">
+          <ion-icon name="calendar-clear-outline"></ion-icon>
+        </div>
+        <p class="empty-state__title">{{ 'home.empty.title' | translate }}</p>
+        <p class="empty-state__sub">{{ 'home.empty.sub' | translate }}</p>
+      </div>
+
+      <div class="today-list" *ngIf="todayEvents.length > 0">
+        <app-event-card
+          *ngFor="let event of todayEvents"
+          [event]="event"
+          [compact]="true"
+          [height]="84"
+        ></app-event-card>
+      </div>
+    </section>
+
+    <!-- 3. Navegación rápida -->
+    <section class="academics-section animate-fade-up" style="animation-delay: 0.12s">
+      <div class="section-header">
+        <div>
+          <p class="section-header__eyebrow">{{ 'home.university.eyebrow' | translate }}</p>
+          <h2 class="section-header__title">{{ universityTitle }}</h2>
+        </div>
+      </div>
+
+      <div class="nav-list">
+        <button class="nav-item" routerLink="/semesters">
+          <div class="nav-item__icon nav-item__icon--violet">
+            <ion-icon name="school-outline"></ion-icon>
+          </div>
+          <div class="nav-item__content">
+            <span class="nav-item__title">{{ 'home.university.semesters' | translate }}</span>
+            <span class="nav-item__sub">{{ 'home.university.semestersSub' | translate }}</span>
+          </div>
+          <ion-icon name="chevron-forward-outline" class="nav-item__arrow"></ion-icon>
+        </button>
+
+        <button class="nav-item" routerLink="/tasks">
+          <div class="nav-item__icon nav-item__icon--amber">
+            <ion-icon name="clipboard-outline"></ion-icon>
+          </div>
+          <div class="nav-item__content">
+            <span class="nav-item__title">{{ 'home.university.tasks' | translate }}</span>
+            <span class="nav-item__sub">{{ 'home.university.tasksSub' | translate }}</span>
+          </div>
+          <ion-icon name="chevron-forward-outline" class="nav-item__arrow"></ion-icon>
+        </button>
+
+        <button class="nav-item" routerLink="/schedule">
+          <div class="nav-item__icon nav-item__icon--indigo">
+            <ion-icon name="calendar-outline"></ion-icon>
+          </div>
+          <div class="nav-item__content">
+            <span class="nav-item__title">{{ 'home.university.schedule' | translate }}</span>
+            <span class="nav-item__sub">{{ 'home.university.scheduleSub' | translate }}</span>
+          </div>
+          <ion-icon name="chevron-forward-outline" class="nav-item__arrow"></ion-icon>
+        </button>
+      </div>
+    </section>
+
+  </div>
+</ion-content>

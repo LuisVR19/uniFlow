@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx ng *)",
+      "Bash(node -e \"const p=require\\('./package.json'\\); console.log\\('@ionic/angular:', p.dependencies['@ionic/angular']\\)\")",
+      "Bash(npm install *)",
+      "Bash(node -e \"const p=require\\('./package.json'\\); console.log\\('@ngx-translate/core:', p.dependencies['@ngx-translate/core']\\); console.log\\('@ngx-translate/http-loader:', p.dependencies['@ngx-translate/http-loader']\\)\")",
+      "Bash(node -e \"const p=require\\('./node_modules/@ngx-translate/http-loader/package.json'\\); console.log\\('version:', p.version, 'main:', p.main\\)\")",
+      "Bash(node -e \"const m=require\\('./node_modules/@ngx-translate/http-loader'\\); console.log\\(Object.keys\\(m\\)\\)\")",
+      "Bash(xargs head *)",
+      "Bash(xargs grep *)",
+      "Bash(node -e \"const p=require\\('./package.json'\\); console.log\\('html2canvas:', p.dependencies['html2canvas']\\); console.log\\('jspdf:', p.dependencies['jspdf']\\)\")",
+      "Bash(node -e \"const j=require\\('jspdf'\\); console.log\\(Object.keys\\(j\\).slice\\(0,10\\)\\)\")",
+      "Bash(node -e \"const j=require\\('jspdf'\\); console.log\\(typeof j.jsPDF, typeof j.default\\)\")",
+      "Bash(npx tsc *)",
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('src/assets/i18n/en.json','utf8'\\)\\); console.log\\('en.json OK'\\)\")",
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('src/assets/i18n/es.json','utf8'\\)\\); console.log\\('es.json OK'\\)\")",
+      "mcp__supabase__apply_migration"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "supabase"
+  ]
+}
